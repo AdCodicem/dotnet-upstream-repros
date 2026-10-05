@@ -1,0 +1,12 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /page-1 -> page 1
+GET /page-2 -> page 2
+
+== EnableRequestDelegateGenerator=true
+Unhandled exception. System.InvalidCastException: Unable to cast object of type '<>f__AnonymousDelegate1`2[System.Int32,System.String]' to type '<>f__AnonymousDelegate0`2[System.Int32,System.String]'.
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>F705AFFC00BBE82D3AAC29F52EDC0EBE8384420EAFA5C35DC66A2FA28704C0DC3__GeneratedRouteBuilderExtensionsCore.Cast[T](Delegate d, T _) in <repro>\obj\Debug\net10.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 209
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>F705AFFC00BBE82D3AAC29F52EDC0EBE8384420EAFA5C35DC66A2FA28704C0DC3__GeneratedRouteBuilderExtensionsCore.MapGet0(IEndpointRouteBuilder endpoints, String pattern, Delegate handler) in <repro>\obj\Debug\net10.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 182
+   at Program.<Main>$(String[] args) in <repro>\Program.cs:line 7
+   at Program.<Main>(String[] args)

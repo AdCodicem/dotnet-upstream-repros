@@ -1,0 +1,17 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /query?id=fd68cb8f-f6ad-4f0a-9d09-5be5ec286d93                                                -> 200 query fd68cb8f-f6ad-4f0a-9d09-5be5ec286d93
+GET /header                                          X-Id: fd68cb8f-f6ad-4f0a-9d09-5be5ec286d93   -> 200 header fd68cb8f-f6ad-4f0a-9d09-5be5ec286d93
+GET /header-a                                        X-A: a                                       -> 200 X-A a
+GET /header-b                                        X-B: b                                       -> 200 X-B b
+GET /header?id=fd68cb8f-f6ad-4f0a-9d09-5be5ec286d93                                               -> 400 
+GET /header-b                                        X-A: a                                       -> 400 
+
+== EnableRequestDelegateGenerator=true
+GET /query?id=667f65d1-029a-4548-b30d-b2c2ae096dda                                                -> 200 query 667f65d1-029a-4548-b30d-b2c2ae096dda
+GET /header                                          X-Id: 667f65d1-029a-4548-b30d-b2c2ae096dda   -> 200 header 667f65d1-029a-4548-b30d-b2c2ae096dda
+GET /header-a                                        X-A: a                                       -> 200 X-A a
+GET /header-b                                        X-B: b                                       -> 200 X-B b
+GET /header?id=667f65d1-029a-4548-b30d-b2c2ae096dda                                               -> 400 
+GET /header-b                                        X-A: a                                       -> 400 

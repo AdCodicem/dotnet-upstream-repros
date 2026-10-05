@@ -1,0 +1,26 @@
+== .NET SDK 10.0.401, net10.0, EF Core 10.0.12, MINGW64_NT-10.0-26200
+
+== Control, model built at run time: dotnet run
+Executed DbCommand (3ms) [Parameters=[@status='Published' (Nullable = false) (Size = 9)], CommandType='Text', CommandTimeout='30']
+SELECT "b"."Id", "b"."Status"
+FROM "Blogs" AS "b"
+WHERE "b"."Status" = @status
+Found 1 blog(s)
+
+== dotnet ef dbcontext optimize --output-dir Compiled --namespace Compiled --precompile-queries
+Build started...
+Build succeeded.
+Query precompilation is an experimental feature and should be used with caution.
+Successfully generated a compiled model, it will be discovered automatically, but you can also call 'options.UseModel(Compiled.BlogContextModel.Instance)'. Run this command again when the model is modified.
+<repro>\Compiled\BlogContextAssemblyAttributes.cs
+<repro>\Compiled\BlogContextModel.cs
+<repro>\Compiled\BlogContextModelBuilder.cs
+<repro>\Compiled\BlogEntityType.cs
+<repro>\Compiled\Program.EFInterceptors.BlogContext.cs
+
+== Precompiled query: dotnet run
+Executed DbCommand (3ms) [Parameters=[@status='1'], CommandType='Text', CommandTimeout='30']
+SELECT "b"."Id", "b"."Status"
+FROM "Blogs" AS "b"
+WHERE "b"."Status" = @status
+Found 0 blog(s)

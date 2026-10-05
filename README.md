@@ -1,0 +1,24 @@
+# dotnet-upstream-repros
+
+Minimal reproductions of bugs reported to .NET repositories. Each folder is a standalone project that uses only
+the .NET SDK and the packages it names, with a `repro.sh` that runs it from scratch and the output it printed on
+.NET 10 and .NET 11 RC1 (`repro-output-<tfm>.txt`).
+
+| Folder | Reported in | Reproduced on 10.0 | On 11.0.0-rc.1 |
+|--------|-------------|--------------------|----------------|
+| [`efcore-precompiled-converter-cast`](efcore-precompiled-converter-cast) | dotnet/efcore (pending) | Yes | Yes |
+| [`efcore-precompiled-enum-parameter`](efcore-precompiled-enum-parameter) | [dotnet/efcore#33541](https://github.com/dotnet/efcore/issues/33541) (comment pending) | Yes | Yes |
+| [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | dotnet/aspnetcore (pending) | Yes | Fixed |
+| [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | dotnet/aspnetcore (pending) | Yes | Yes |
+
+Running a repro needs bash (Git Bash works on Windows) and the .NET SDK of the target framework:
+
+```bash
+./efcore-precompiled-converter-cast/repro.sh                       # .NET 10
+REPRO_TFM=net11.0 REPRO_EF_VERSION=11.0.0-rc.1.26425.128 \
+  ./efcore-precompiled-converter-cast/repro.sh                     # .NET 11 RC1 (the EF Core folders)
+REPRO_TFM=net11.0 ./aspnetcore-rdg-default-value/repro.sh          # .NET 11 RC1 (the ASP.NET Core folders)
+```
+
+The EF Core folders install `dotnet-ef` locally, under `.tools/`, at the same version as the packages, and point
+`DOTNET_ROOT` at the `dotnet` on `PATH` when it is not set, so an SDK installed in a folder works too.

@@ -1,0 +1,30 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+
+== Control, model built at run time: dotnet run -p:PublishAot=false
+Blog 1: Published
+Post 1: rated 5
+
+== dotnet ef dbcontext optimize --output-dir Compiled --namespace Compiled --precompile-queries --nativeaot
+Build started...
+Build succeeded.
+Query precompilation is an experimental feature and should be used with caution.
+NativeAOT support is experimental and can change in the future.
+Successfully generated a compiled model, it will be discovered automatically, but you can also call 'options.UseModel(Compiled.BlogContextModel.Instance)'. Run this command again when the model is modified.
+<repro>\Compiled\BlogContextAssemblyAttributes.cs
+<repro>\Compiled\BlogUnsafeAccessors.cs
+<repro>\Compiled\PostUnsafeAccessors.cs
+<repro>\Compiled\BlogContextModel.cs
+<repro>\Compiled\BlogContextModelBuilder.cs
+<repro>\Compiled\BlogEntityType.cs
+<repro>\Compiled\PostEntityType.cs
+<repro>\Compiled\Program.EFInterceptors.BlogContext.cs
+
+== Precompiled queries under the JIT: dotnet run
+Blog 1: Published
+System.InvalidCastException: Unable to cast object of type 'Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter`2[Rating,System.Int32]' to type 'RatingConverter'.
+   at Microsoft.EntityFrameworkCore.GeneratedInterceptors.<Program_EFInterceptors_BlogContext>F299A4425E6257579C1060C1267347CAB8CF0588722926E6F18CFE39CDF6F48E2__EntityFrameworkCoreInterceptors.<>c__DisplayClass4_0.<Query2_GenerateExecutor>b__2(QueryContext queryContext, DbDataReader dataReader, ResultContext resultContext, SingleQueryResultCoordinator resultCoordinator) in <repro>\Compiled\Program.EFInterceptors.BlogContext.cs:line 153
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at Microsoft.EntityFrameworkCore.GeneratedInterceptors.<Program_EFInterceptors_BlogContext>F299A4425E6257579C1060C1267347CAB8CF0588722926E6F18CFE39CDF6F48E2__EntityFrameworkCoreInterceptors.Query2_ToList1[TSource](IEnumerable`1 source) in <repro>\Compiled\Program.EFInterceptors.BlogContext.cs:line 113
+   at Program.<Main>$(String[] args) in <repro>\Program.cs:line 24
