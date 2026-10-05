@@ -6,10 +6,10 @@ the .NET SDK and the packages it names, with a `repro.sh` that runs it from scra
 
 | Folder | Reported in | Reproduced on 10.0 | On 11.0.0-rc.1 |
 |--------|-------------|--------------------|----------------|
-| [`efcore-precompiled-converter-cast`](efcore-precompiled-converter-cast) | dotnet/efcore (pending) | Yes | Yes |
-| [`efcore-precompiled-enum-parameter`](efcore-precompiled-enum-parameter) | [dotnet/efcore#33541](https://github.com/dotnet/efcore/issues/33541) (comment pending) | Yes | Yes |
-| [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | dotnet/aspnetcore (pending) | Yes | Fixed |
-| [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | dotnet/aspnetcore (pending) | Yes | Yes |
+| [`efcore-precompiled-converter-cast`](efcore-precompiled-converter-cast) | [dotnet/efcore#39174](https://github.com/dotnet/efcore/issues/39174) | Yes | Yes |
+| [`efcore-precompiled-enum-parameter`](efcore-precompiled-enum-parameter) | [dotnet/efcore#33541](https://github.com/dotnet/efcore/issues/33541#issuecomment-6002610956) (comment) | Yes | Yes |
+| [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | [dotnet/aspnetcore#69676](https://github.com/dotnet/aspnetcore/issues/69676) (10.0 backport of #67591) | Yes | Fixed |
+| [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | [dotnet/aspnetcore#69675](https://github.com/dotnet/aspnetcore/issues/69675) | Yes | Yes |
 
 Running a repro needs bash (Git Bash works on Windows) and the .NET SDK of the target framework:
 
