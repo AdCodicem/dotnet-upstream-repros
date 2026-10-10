@@ -1,0 +1,54 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+
+== dotnet build (the Request Delegate Generator is off, as it is by default)
+CSC : warning AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+CSC : warning AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 0
+
+== the AD0001 messages in full, from the compiler's error log
+Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'.
+Exception occurred with following context:
+Compilation: Repro
+IOperation: Invocation
+SyntaxTree: <repro>\Program.cs
+SyntaxNode: app.MapGet("/creation", new Func ... [InvocationExpressionSyntax]@[158..219) (3,0)-(3,61)
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at System.Linq.ImmutableArrayExtensions.FirstOrDefault[T](ImmutableArray`1 immutableArray, Func`2 predicate)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<DisallowNonParsableComplexTypesOnParameters>g__IsRouteParameter|8_0(RouteUsageModel routeUsage, IParameterSymbol handlerDelegateParameter)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.DisallowNonParsableComplexTypesOnParameters(OperationAnalysisContext& context, WellKnownTypes wellKnownTypes, RouteUsageModel routeUsage, IMethodSymbol methodSymbol)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<>c__DisplayClass16_0.<Initialize>g__DoOperationAnalysis|2(OperationAnalysisContext context, ConcurrentDictionary`2 mapOperations)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<>c__DisplayClass16_1.<Initialize>b__3(OperationAnalysisContext c)
+   at Microsoft.CodeAnalysis.Diagnostics.AnalyzerExecutor.ExecuteAndCatchIfThrows_NoLock[TArg](DiagnosticAnalyzer analyzer, Action`1 analyze, TArg argument, Nullable`1 info, CancellationToken cancellationToken)
+-----
+
+Suppress the following diagnostics to disable this analyzer: ASP0003, ASP0004, ASP0005, ASP0007, ASP0020, ASP0021, ASP0022, ASP0024
+
+Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'.
+Exception occurred with following context:
+Compilation: Repro
+IOperation: Invocation
+SyntaxTree: <repro>\Program.cs
+SyntaxNode: app.MapGet("/converted", (Func< ... [InvocationExpressionSyntax]@[221..290) (4,0)-(4,69)
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at System.Linq.ImmutableArrayExtensions.FirstOrDefault[T](ImmutableArray`1 immutableArray, Func`2 predicate)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<DisallowNonParsableComplexTypesOnParameters>g__IsRouteParameter|8_0(RouteUsageModel routeUsage, IParameterSymbol handlerDelegateParameter)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.DisallowNonParsableComplexTypesOnParameters(OperationAnalysisContext& context, WellKnownTypes wellKnownTypes, RouteUsageModel routeUsage, IMethodSymbol methodSymbol)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<>c__DisplayClass16_0.<Initialize>g__DoOperationAnalysis|2(OperationAnalysisContext context, ConcurrentDictionary`2 mapOperations)
+   at Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer.<>c__DisplayClass16_1.<Initialize>b__3(OperationAnalysisContext c)
+   at Microsoft.CodeAnalysis.Diagnostics.AnalyzerExecutor.ExecuteAndCatchIfThrows_NoLock[TArg](DiagnosticAnalyzer analyzer, Action`1 analyze, TArg argument, Nullable`1 info, CancellationToken cancellationToken)
+-----
+
+Suppress the following diagnostics to disable this analyzer: ASP0003, ASP0004, ASP0005, ASP0007, ASP0020, ASP0021, ASP0022, ASP0024
+
+
+== dotnet build -p:EnableRequestDelegateGenerator=true
+CSC : warning AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+CSC : warning AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 0
+
+== dotnet build -p:TreatWarningsAsErrors=true
+CSC : error AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+CSC : error AD0001: Analyzer 'Microsoft.AspNetCore.Analyzers.RouteHandlers.RouteHandlerAnalyzer' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 1

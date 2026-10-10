@@ -1,0 +1,11 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+/{*path}: Order 0, DisplayName "HTTP: GET /{*path}", FallbackMetadata False
+{*path:nonfile}: Order 2147483647, DisplayName "Fallback {*path:nonfile}", FallbackMetadata True
+GET /missing -> catch-all
+
+== EnableRequestDelegateGenerator=true
+/{*path}: Order 0, DisplayName "HTTP: GET /{*path}", FallbackMetadata False
+{*path:nonfile}: Order 0, DisplayName "{*path:nonfile}", FallbackMetadata False
+GET /missing -> fallback

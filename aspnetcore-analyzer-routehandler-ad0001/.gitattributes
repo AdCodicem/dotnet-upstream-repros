@@ -1,0 +1,3 @@
+# The AD0001 message gives character offsets into Program.cs, which count a CR: LF everywhere keeps
+# repro-output-<tfm>.txt the same on every checkout.
+Program.cs text eol=lf

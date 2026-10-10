@@ -14,6 +14,8 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 | [`aspnetcore-rdg-string-default-explicit-source`](aspnetcore-rdg-string-default-explicit-source) | [dotnet/aspnetcore#69756](https://github.com/dotnet/aspnetcore/issues/69756) | Yes | Yes |
 | [`aspnetcore-rdg-mapfallback-overloads`](aspnetcore-rdg-mapfallback-overloads) | [dotnet/aspnetcore#69757](https://github.com/dotnet/aspnetcore/issues/69757) | Yes | Yes |
 | [`aspnetcore-rdg-negative-zero-default`](aspnetcore-rdg-negative-zero-default) | [dotnet/aspnetcore#69758](https://github.com/dotnet/aspnetcore/issues/69758) | Yes | Yes |
+| [`aspnetcore-rdg-mapfallback-order`](aspnetcore-rdg-mapfallback-order) | dotnet/aspnetcore | Yes | Yes |
+| [`aspnetcore-analyzer-routehandler-ad0001`](aspnetcore-analyzer-routehandler-ad0001) | dotnet/aspnetcore | Yes | Yes |
 | [`aspnetcore-openapi-default-value-type-mismatch`](aspnetcore-openapi-default-value-type-mismatch) | [dotnet/aspnetcore#60019](https://github.com/dotnet/aspnetcore/issues/60019#issuecomment-6095044674) (comment) | Yes | Yes |
 | [`mcp-csharp-withtools-schema-options`](mcp-csharp-withtools-schema-options) | [modelcontextprotocol/csharp-sdk#1865](https://github.com/modelcontextprotocol/csharp-sdk/issues/1865#issuecomment-6095041485) (comment) | Yes | Not run |
 | [`mcp-csharp-outputschema-required-null`](mcp-csharp-outputschema-required-null) | [modelcontextprotocol/csharp-sdk#1915](https://github.com/modelcontextprotocol/csharp-sdk/issues/1915) | Yes | Not run |
