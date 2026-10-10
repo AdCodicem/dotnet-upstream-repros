@@ -10,13 +10,13 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 | [`efcore-precompiled-enum-parameter`](efcore-precompiled-enum-parameter) | [dotnet/efcore#33541](https://github.com/dotnet/efcore/issues/33541#issuecomment-6002610956) (comment) | Yes | Yes |
 | [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | [dotnet/aspnetcore#69676](https://github.com/dotnet/aspnetcore/issues/69676) (10.0 backport of #67591) | Yes | Fixed |
 | [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | [dotnet/aspnetcore#69675](https://github.com/dotnet/aspnetcore/issues/69675) | Yes | Yes |
-| [`aspnetcore-openapi-default-value-type-mismatch`](aspnetcore-openapi-default-value-type-mismatch) | dotnet/aspnetcore | Yes | Yes |
-| [`mcp-csharp-withtools-schema-options`](mcp-csharp-withtools-schema-options) | modelcontextprotocol/csharp-sdk | Yes | Not run |
-| [`mcp-csharp-outputschema-required-null`](mcp-csharp-outputschema-required-null) | modelcontextprotocol/csharp-sdk | Yes | Not run |
-| [`mcp-csharp-delegating-tool-legacy-outputschema`](mcp-csharp-delegating-tool-legacy-outputschema) | modelcontextprotocol/csharp-sdk | Yes | Not run |
-| [`meai-response-format-schema-options`](meai-response-format-schema-options) | dotnet/extensions | Yes | Not run |
-| [`agent-framework-runasync-schema-options`](agent-framework-runasync-schema-options) | microsoft/agent-framework | Yes | Not run |
-| [`semantic-kernel-converter-message-swallowed`](semantic-kernel-converter-message-swallowed) | microsoft/semantic-kernel | Yes | Not run |
+| [`aspnetcore-openapi-default-value-type-mismatch`](aspnetcore-openapi-default-value-type-mismatch) | [dotnet/aspnetcore#60019](https://github.com/dotnet/aspnetcore/issues/60019#issuecomment-6095044674) (comment) | Yes | Yes |
+| [`mcp-csharp-withtools-schema-options`](mcp-csharp-withtools-schema-options) | [modelcontextprotocol/csharp-sdk#1865](https://github.com/modelcontextprotocol/csharp-sdk/issues/1865#issuecomment-6095041485) (comment) | Yes | Not run |
+| [`mcp-csharp-outputschema-required-null`](mcp-csharp-outputschema-required-null) | [modelcontextprotocol/csharp-sdk#1915](https://github.com/modelcontextprotocol/csharp-sdk/issues/1915) | Yes | Not run |
+| [`mcp-csharp-delegating-tool-legacy-outputschema`](mcp-csharp-delegating-tool-legacy-outputschema) | [modelcontextprotocol/csharp-sdk#1916](https://github.com/modelcontextprotocol/csharp-sdk/issues/1916) | Yes | Not run |
+| [`meai-response-format-schema-options`](meai-response-format-schema-options) | [dotnet/extensions#7821](https://github.com/dotnet/extensions/issues/7821) | Yes | Not run |
+| [`agent-framework-runasync-schema-options`](agent-framework-runasync-schema-options) | [microsoft/agent-framework#9245](https://github.com/microsoft/agent-framework/issues/9245) | Yes | Not run |
+| [`semantic-kernel-converter-message-swallowed`](semantic-kernel-converter-message-swallowed) | [microsoft/semantic-kernel#14575](https://github.com/microsoft/semantic-kernel/issues/14575) | Yes | Not run |
 
 Running a repro needs bash (Git Bash works on Windows) and the .NET SDK of the target framework:
 
