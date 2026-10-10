@@ -1,0 +1,26 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /params?ids=1&ids=2 -> 200 params 2
+GET /func -> 200 page 1
+GET /named?size=5 -> 200 size 5
+
+== EnableRequestDelegateGenerator=true
+System.InvalidCastException: Unable to cast object of type '<>f__AnonymousDelegate0`2[System.Int32,System.String]' to type 'System.Func`2[System.Int32[],System.String]'.
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.Cast[T](Delegate d, T _) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 470
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.MapGet0(IEndpointRouteBuilder endpoints, String pattern, Delegate handler) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 181
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__0() in <repro>\Program.cs:line 7
+   at Program.<<Main>$>g__Try|0_3(Action map) in <repro>\Program.cs:line 22
+System.InvalidCastException: Unable to cast object of type 'System.Func`2[System.Int32,System.String]' to type '<>f__AnonymousDelegate1`2[System.Int32,System.String]'.
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.Cast[T](Delegate d, T _) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 470
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.MapGet1(IEndpointRouteBuilder endpoints, String pattern, Delegate handler) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 312
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__1() in <repro>\Program.cs:line 8
+   at Program.<<Main>$>g__Try|0_3(Action map) in <repro>\Program.cs:line 22
+System.InvalidCastException: Unable to cast object of type 'SizeHandler' to type 'System.Func`2[System.Int32,System.String]'.
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.Cast[T](Delegate d, T _) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 470
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>FB1F4AE16FD0A43EFD0A7FD777182F766FE6CD64BD44414DFD1C6C00D2FB1364C__GeneratedRouteBuilderExtensionsCore.MapGet2(IEndpointRouteBuilder endpoints, String pattern, Delegate handler) in <repro>\obj\Debug\net11.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs:line 443
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__2() in <repro>\Program.cs:line 9
+   at Program.<<Main>$>g__Try|0_3(Action map) in <repro>\Program.cs:line 22
+GET /params?ids=1&ids=2 -> 404 
+GET /func -> 404 
+GET /named?size=5 -> 404 
