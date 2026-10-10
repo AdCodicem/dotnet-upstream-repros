@@ -1,0 +1,18 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /double -> -0.0
+GET /float -> -0.0f
+GET /decimal -> -0.0m
+GET /double?d=-0 -> -0.0
+
+== EnableRequestDelegateGenerator=true
+GET /double -> +0.0
+GET /float -> -0.0f
+GET /decimal -> +0.0m
+GET /double?d=-0 -> -0.0
+
+== The fallbacks the generator wrote for -0.0, -0.0f and -0.0m (GeneratedRouteBuilderExtensions.g.cs)
+d_parsed_temp = -0;
+f_parsed_temp = -0F;
+m_parsed_temp = 0.0M;

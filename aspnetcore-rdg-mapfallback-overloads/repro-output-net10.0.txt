@@ -1,0 +1,17 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /api/missing -> api fallback
+GET /missing -> site fallback
+
+== EnableRequestDelegateGenerator=true
+obj\Debug\net10.0\generated\Microsoft.AspNetCore.Http.RequestDelegateGenerator\Microsoft.AspNetCore.Http.RequestDelegateGenerator.RequestDelegateGenerator\GeneratedRouteBuilderExtensions.g.cs(61,10): error CS9144: Cannot intercept method 'EndpointRouteBuilderExtensions.MapFallback(IEndpointRouteBuilder, Delegate)' with interceptor 'GeneratedRouteBuilderExtensionsCore.MapFallback0(IEndpointRouteBuilder, string, Delegate)' because the signatures do not match. [<repro>\Repro.csproj]
+build failed
+
+== The interceptor, in GeneratedRouteBuilderExtensions.g.cs (location data elided)
+        [global::System.Runtime.CompilerServices.InterceptsLocationAttribute(1, "...")]
+        [global::System.Runtime.CompilerServices.InterceptsLocationAttribute(1, "...")]
+        internal static RouteHandlerBuilder MapFallback0(
+            this IEndpointRouteBuilder endpoints,
+            [StringSyntax("Route")] string pattern,
+            Delegate handler)

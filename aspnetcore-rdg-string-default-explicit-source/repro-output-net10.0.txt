@@ -1,0 +1,23 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false
+GET /query -> "asc"
+GET /header -> "asc"
+GET /route -> "asc"
+GET /inferred -> "asc"
+GET /query-int -> 1
+GET /query?fromQuery=desc -> "desc"
+
+== EnableRequestDelegateGenerator=true
+GET /query -> null
+GET /header -> null
+GET /route -> null
+GET /inferred -> "asc"
+GET /query-int -> 1
+GET /query?fromQuery=desc -> "desc"
+
+== Generated code: what each string parameter falls back to
+var fromHeader_temp = fromHeader_raw.Count > 0 ? (string?)fromHeader_raw : null;
+var fromQuery_temp = fromQuery_raw.Count > 0 ? (string?)fromQuery_raw : null;
+var fromRoute_temp = (string?)fromRoute_raw;
+var inferred_temp = inferred_raw.Count > 0 ? (string?)inferred_raw : "asc";

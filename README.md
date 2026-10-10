@@ -11,6 +11,9 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 | [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | [dotnet/aspnetcore#69676](https://github.com/dotnet/aspnetcore/issues/69676) (10.0 backport of #67591) | Yes | Fixed |
 | [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | [dotnet/aspnetcore#69675](https://github.com/dotnet/aspnetcore/issues/69675) | Yes | Yes |
 | [`aspnetcore-rdg-cast-rebuilt-from-method`](aspnetcore-rdg-cast-rebuilt-from-method) | [dotnet/aspnetcore#69755](https://github.com/dotnet/aspnetcore/issues/69755) | Yes | Yes |
+| [`aspnetcore-rdg-string-default-explicit-source`](aspnetcore-rdg-string-default-explicit-source) | dotnet/aspnetcore | Yes | Yes |
+| [`aspnetcore-rdg-mapfallback-overloads`](aspnetcore-rdg-mapfallback-overloads) | dotnet/aspnetcore | Yes | Yes |
+| [`aspnetcore-rdg-negative-zero-default`](aspnetcore-rdg-negative-zero-default) | dotnet/aspnetcore | Yes | Yes |
 | [`aspnetcore-openapi-default-value-type-mismatch`](aspnetcore-openapi-default-value-type-mismatch) | [dotnet/aspnetcore#60019](https://github.com/dotnet/aspnetcore/issues/60019#issuecomment-6095044674) (comment) | Yes | Yes |
 | [`mcp-csharp-withtools-schema-options`](mcp-csharp-withtools-schema-options) | [modelcontextprotocol/csharp-sdk#1865](https://github.com/modelcontextprotocol/csharp-sdk/issues/1865#issuecomment-6095041485) (comment) | Yes | Not run |
 | [`mcp-csharp-outputschema-required-null`](mcp-csharp-outputschema-required-null) | [modelcontextprotocol/csharp-sdk#1915](https://github.com/modelcontextprotocol/csharp-sdk/issues/1915) | Yes | Not run |
