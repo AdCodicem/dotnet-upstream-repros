@@ -1,0 +1,94 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, Microsoft.AspNetCore.OpenApi 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+
+== minimal: [DefaultValue(5)] on a long
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNP6ILSTBG6O", Request id "0HNP6ILSTBG6O:00000001": An unhandled exception was thrown by the application.
+      System.InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.Int64'.
+         at System.Text.Json.JsonSerializer.UnboxOnWrite[T](Object value)
+         at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsObject(Utf8JsonWriter writer, Object rootValue)
+         at System.Text.Json.JsonSerializer.WriteNodeAsObject(Object value, JsonTypeInfo jsonTypeInfo)
+         at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+         at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+         at System.Text.Json.Schema.JsonSchema.<ToJsonNode>g__CompleteSchema|110_0(JsonNode schema, <>c__DisplayClass110_0&)
+         at System.Text.Json.Schema.JsonSchema.ToJsonNode(JsonSchemaExporterOptions options)
+         at System.Text.Json.Schema.JsonSchema.ToJsonNode(JsonSchemaExporterOptions options)
+         at System.Text.Json.Schema.JsonSchemaExporter.GetJsonSchemaAsNode(JsonTypeInfo typeInfo, JsonSchemaExporterOptions exporterOptions)
+         at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.CreateSchema(Type type)
+         at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.GetOrCreateUnresolvedSchemaAsync(OpenApiDocument document, Type type, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, ApiParameterDescription parameterDescription, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.GetOrCreateSchemaAsync(OpenApiDocument document, Type type, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, ApiParameterDescription parameterDescription, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetResponseAsync(OpenApiDocument document, ApiDescription apiDescription, Int32 statusCode, IReadOnlyList`1 apiResponseTypes, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetResponsesAsync(OpenApiDocument document, ApiDescription description, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOperationAsync(ApiDescription description, OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOperationsAsync(IGrouping`2 descriptions, OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiOperationTransformer[] operationTransformers, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOpenApiPathsAsync(OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiOperationTransformer[] operationTransformers, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOpenApiDocumentAsync(IServiceProvider scopedServiceProvider, HttpRequest httpRequest, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Builder.OpenApiEndpointRouteBuilderExtensions.<>c__DisplayClass0_0.<<MapOpenApi>b__0>d.MoveNext()
+      --- End of stack trace from previous location ---
+         at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>F2F695FFF0C57E2AC66C44A89193E354033830917758BE7A77025BFF91AF84311__GeneratedRouteBuilderExtensionsCore.<>c__DisplayClass2_0.<<MapGet0>g__RequestHandler|5>d.MoveNext()
+      --- End of stack trace from previous location ---
+         at System.Runtime.CompilerServices.AsyncHelpers.TransparentAwait(Task task)
+         at Microsoft.AspNetCore.Hosting.HostingApplication.ProcessRequestAsync(Context context)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+GET /openapi/v1.json -> 500
+
+== cases: [DefaultValue(5)] on a long, and one document per case
+== GET /openapi/struct-nullable.json -> 500
+System.InvalidCastException: Unable to cast object of type 'System.String' to type 'System.Nullable`1[CountryCode]'.
+   at System.Text.Json.JsonSerializer.UnboxOnWrite[T](Object value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsObject(Utf8JsonWriter writer, Object rootValue)
+   at System.Text.Json.JsonSerializer.WriteNodeAsObject(Object value, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+   at System.Text.Json.Schema.JsonSchema.<ToJsonNode>g__CompleteSchema|110_0(JsonNode schema, <>c__DisplayClass110_0&)
+   at System.Text.Json.Schema.JsonSchema.ToJsonNode(JsonSchemaExporterOptions options)
+   at System.Text.Json.Schema.JsonSchema.ToJsonNode(JsonSchemaExporterOptions options)
+   at System.Text.Json.Schema.JsonSchemaExporter.GetJsonSchemaAsNode(JsonTypeInfo typeInfo, JsonSchemaExporterOptions exporterOptions)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.CreateSchema(Type type)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.GetOrCreateUnresolvedSchemaAsync(OpenApiDocument document, Type type, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, ApiParameterDescription parameterDescription, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.GetOrCreateSchemaAsync(OpenApiDocument document, Type type, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, ApiParameterDescription parameterDescription, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetResponseAsync(OpenApiDocument document, ApiDescription apiDescription, Int32 statusCode, IReadOnlyList`1 apiResponseTypes, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetResponsesAsync(OpenApiDocument document, ApiDescription description, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOperationAsync(ApiDescription description, OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOperationsAsync(IGrouping`2 descriptions, OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiOperationTransformer[] operationTransformers, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOpenApiPathsAsync(OpenApiDocument document, IServiceProvider scopedServiceProvider, IOpenApiOperationTransformer[] operationTransformers, IOpenApiSchemaTransformer[] schemaTransformers, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.OpenApi.OpenApiDocumentService.GetOpenApiDocumentAsync(IServiceProvider scopedServiceProvider, HttpRequest httpRequest, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Builder.OpenApiEndpointRouteBuilderExtensions.<>c__DisplayClass0_0.<<MapOpenApi>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Http.Generated.<GeneratedRouteBuilderExtensions_g>F2F695FFF0C57E2AC66C44A89193E354033830917758BE7A77025BFF91AF84311__GeneratedRouteBuilderExtensionsCore.<>c__DisplayClass2_0.<<MapGet0>g__RequestHandler|5>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Program.<>c__DisplayClass0_0.<<<Main>$>b__12>d.MoveNext() in <repro>\cases\Program.cs:line 37
+== GET /openapi/struct.json -> 500
+   System.InvalidCastException: Unable to cast object of type 'System.String' to type 'CountryCode'.
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+== GET /openapi/struct-nullable-no-default.json -> 200
+   CountryCode: {}
+   NullableStructWithoutDefault: {"type":"object","properties":{"country":{"oneOf":[{"type":"null"},{"$ref":"#/components/schemas/CountryCode"}]}}}
+== GET /openapi/int-nullable.json -> 200
+   NullableIntWithDefault: {"type":"object","properties":{"count":{"pattern":"^-?(?:0|[1-9]\\d*)$","type":["null","integer","string"],"format":"int32","default":5}}}
+== GET /openapi/long.json -> 500
+   System.InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.Int64'.
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+== GET /openapi/decimal.json -> 500
+   System.InvalidCastException: Unable to cast object of type 'System.Double' to type 'System.Decimal'.
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+== GET /openapi/decimal-typed-default.json -> 200
+   DecimalWithTypedDefault: {"type":"object","properties":{"rate":{"pattern":"^-?(?:0|[1-9]\\d*)(?:\\.\\d\u002B)?$","type":["number","string"],"format":"double","default":0.5}}}
+== GET /openapi/date-only.json -> 500
+   System.InvalidCastException: Unable to cast object of type 'System.String' to type 'System.DateOnly'.
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.OpenApiSchemaService.<.ctor>b__0_2(JsonSchemaExporterContext context, JsonNode schema)
+== GET /openapi/long-query-parameter.json -> 500
+   System.InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.Int64'.
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyDefaultValue(JsonNode schema, Object defaultValue, JsonTypeInfo jsonTypeInfo)
+   at Microsoft.AspNetCore.OpenApi.JsonNodeSchemaExtensions.ApplyParameterInfo(JsonNode schema, ApiParameterDescription parameterDescription, JsonTypeInfo jsonTypeInfo)
+== GET /openapi/date-only-typed-default.json -> 200
+   DateOnlyWithTypedDefault: {"type":"object","properties":{"day":{"type":"string","format":"date","default":"2026-01-01"}}}
+== GET /openapi/struct-typed-default.json -> 200
+   CountryCode: {}
+   StructWithTypedDefault: {"type":"object","properties":{"country":{"$ref":"#/components/schemas/CountryCode"}}}
+== GET /openapi/struct-type-converter-typed-default.json -> 200
+   ConvertibleStructWithTypedDefault: {"type":"object","properties":{"currency":{"default":"EUR","$ref":"#/components/schemas/CurrencyCode"}}}
+   CurrencyCode: {}

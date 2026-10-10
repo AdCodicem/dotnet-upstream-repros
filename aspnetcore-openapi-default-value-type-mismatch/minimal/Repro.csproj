@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <!-- repro.sh sets REPRO_TFM and REPRO_OPENAPI_VERSION; the defaults are .NET 10 and 10.0.12. -->
+    <TargetFramework>$(REPRO_TFM)</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net10.0</TargetFramework>
+    <OpenApiPackageVersion>$(REPRO_OPENAPI_VERSION)</OpenApiPackageVersion>
+    <OpenApiPackageVersion Condition="'$(OpenApiPackageVersion)' == ''">10.0.12</OpenApiPackageVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="$(OpenApiPackageVersion)" />
+  </ItemGroup>
+
+</Project>

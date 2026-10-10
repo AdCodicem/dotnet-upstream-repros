@@ -1,0 +1,46 @@
+== .NET SDK 10.0.401, net10.0, Node.js v26.5.0, MINGW64_NT-10.0-26200
+
+== The SDK's own client, in process: dotnet bin/Release/net10.0/Repro.dll
+== McpClientOptions.ProtocolVersion = (not set), negotiated 2026-07-28
+tools/list  count         outputSchema:      {"type":"integer"}
+tools/call  count         structuredContent: 72
+tools/list  count_wrapped outputSchema:      {"type":"integer"}
+tools/call  count_wrapped structuredContent: 72
+== McpClientOptions.ProtocolVersion = 2025-11-25, negotiated 2025-11-25
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+tools/list  count_wrapped outputSchema:      {"type":"integer"}
+tools/call  count_wrapped structuredContent: {"result":72}
+== McpClientOptions.ProtocolVersion = 2025-06-18, negotiated 2025-06-18
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+tools/list  count_wrapped outputSchema:      {"type":"integer"}
+tools/call  count_wrapped structuredContent: {"result":72}
+
+== The TypeScript SDK's client over stdio: node client/client.mjs bin/Release/net10.0/Repro.dll
+== @modelcontextprotocol/sdk 1.32.1 Client over stdio, server args [--stdio] (negotiated 2025-11-25)
+ERROR from listTools: [{"code":"invalid_value","values":["object"],"path":["tools",0,"outputSchema","type"],"message":"Invalid input: expected \"object\""}]
+raw tools/list  tools[0] count_wrapped outputSchema: {"type":"integer"}
+raw tools/list  tools[1] count         outputSchema: {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+
+== Control, the SDK's tool only: node client/client.mjs bin/Release/net10.0/Repro.dll --sdk-tool-only
+== @modelcontextprotocol/sdk 1.32.1 Client over stdio, server args [--stdio --sdk-tool-only] (negotiated 2025-11-25)
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+
+== Control, ModelContextProtocol 1.4.1 (before the reshaping moved to tools/list): the SDK's own client, in process
+== McpClientOptions.ProtocolVersion = (not set), negotiated 2025-11-25
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+tools/list  count_wrapped outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count_wrapped structuredContent: {"result":72}
+== McpClientOptions.ProtocolVersion = 2025-11-25, negotiated 2025-11-25
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+tools/list  count_wrapped outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count_wrapped structuredContent: {"result":72}
+== McpClientOptions.ProtocolVersion = 2025-06-18, negotiated 2025-06-18
+tools/list  count         outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count         structuredContent: {"result":72}
+tools/list  count_wrapped outputSchema:      {"type":"object","properties":{"result":{"type":"integer"}},"required":["result"]}
+tools/call  count_wrapped structuredContent: {"result":72}

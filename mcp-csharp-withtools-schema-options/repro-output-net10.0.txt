@@ -1,0 +1,7 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+== WithTools<GeoTools>()
+find_office inputSchema:  {"type":"object","properties":{"country":true},"required":["country"]}
+find_office outputSchema: {"type":"object","properties":{"country":true,"city":{"type":"string"}},"required":["country","city"]}
+== McpServerTool.Create(method, options: new() { SchemaCreateOptions = rules }) + WithTools(tools)
+find_office inputSchema:  {"type":"object","properties":{"country":{"type":"string","pattern":"^[A-Z]{2}$"}},"required":["country"]}
+find_office outputSchema: {"type":"object","properties":{"country":{"type":"string","pattern":"^[A-Z]{2}$"},"city":{"type":"string"}},"required":["country","city"]}

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- repro.sh sets REPRO_MCP_VERSION for its control run on the last 1.x; the default is 2.2.0. -->
+    <McpVersion>$(REPRO_MCP_VERSION)</McpVersion>
+    <McpVersion Condition="'$(McpVersion)' == ''">2.2.0</McpVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" Version="$(McpVersion)" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
+  </ItemGroup>
+
+</Project>

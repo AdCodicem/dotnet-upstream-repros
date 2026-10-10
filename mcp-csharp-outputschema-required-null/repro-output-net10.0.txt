@@ -1,0 +1,36 @@
+== .NET SDK 10.0.401, net10.0, Node.js v26.5.0, MINGW64_NT-10.0-26200
+
+== The SDK's own client, in process: dotnet bin/Release/net10.0/Repro.dll
+McpJsonUtilities.DefaultOptions.DefaultIgnoreCondition = WhenWritingNull
+== WithTools<OrderTools>() (negotiated 2026-07-28)
+tools/list  get_invoice  outputSchema:      {"type":"object","properties":{"number":{"type":"string"},"paidOn":{"type":["string","null"],"format":"date"}}}
+tools/call  get_invoice  structuredContent: {"number":"F-1"}
+tools/list  get_order    outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"note":{"type":["string","null"]}},"required":["id","note"]}
+tools/call  get_order    structuredContent: {"id":"42"}
+tools/list  get_parcel   outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"label":{"type":["string","null"]}},"required":["id","label"]}
+tools/call  get_parcel   structuredContent: {"id":"P-7"}
+tools/list  get_shipment outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"carrier":{"type":["string","null"],"default":null}},"required":["id"]}
+tools/call  get_shipment structuredContent: {"id":"S-3"}
+== WithTools<OrderTools>(keepNulls), keepNulls = DefaultOptions with DefaultIgnoreCondition = Never (negotiated 2026-07-28)
+tools/list  get_invoice  outputSchema:      {"type":"object","properties":{"number":{"type":"string"},"paidOn":{"type":["string","null"],"format":"date"}}}
+tools/call  get_invoice  structuredContent: {"number":"F-1","paidOn":null}
+tools/list  get_order    outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"note":{"type":["string","null"]}},"required":["id","note"]}
+tools/call  get_order    structuredContent: {"id":"42","note":null}
+tools/list  get_parcel   outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"label":{"type":["string","null"]}},"required":["id","label"]}
+tools/call  get_parcel   structuredContent: {"id":"P-7","label":null}
+tools/list  get_shipment outputSchema:      {"type":"object","properties":{"id":{"type":"string"},"carrier":{"type":["string","null"],"default":null}},"required":["id"]}
+tools/call  get_shipment structuredContent: {"id":"S-3","carrier":null}
+
+== The TypeScript SDK's client over stdio: node client/client.mjs bin/Release/net10.0/Repro.dll
+== @modelcontextprotocol/sdk 1.32.1 Client over stdio, server args [--stdio] (negotiated 2025-11-25)
+tools/call  get_invoice  OK    {"number":"F-1"}
+tools/call  get_order    ERROR MCP error -32602: Structured content does not match the tool's output schema: data must have required property 'note'
+tools/call  get_parcel   ERROR MCP error -32602: Structured content does not match the tool's output schema: data must have required property 'label'
+tools/call  get_shipment OK    {"id":"S-3"}
+
+== Serializer options that keep nulls: node client/client.mjs bin/Release/net10.0/Repro.dll --keep-nulls
+== @modelcontextprotocol/sdk 1.32.1 Client over stdio, server args [--stdio --keep-nulls] (negotiated 2025-11-25)
+tools/call  get_invoice  OK    {"number":"F-1","paidOn":null}
+tools/call  get_order    OK    {"id":"42","note":null}
+tools/call  get_parcel   OK    {"id":"P-7","label":null}
+tools/call  get_shipment OK    {"id":"S-3","carrier":null}

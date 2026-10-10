@@ -1,0 +1,41 @@
+== .NET SDK 10.0.401, net10.0, MINGW64_NT-10.0-26200
+JsonSerializer.Deserialize<Quantity>("500"): JsonException: A quantity is between 1 and 100.
+JsonSerializer.Deserialize<Iban>("\"FR76\""): JsonException: An IBAN has 15 to 34 characters.
+
+== OpenAI connector, FunctionChoiceBehavior.Auto(), RetainArgumentTypes = False
+SetQuantity({"quantity":500})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.String' cannot be converted to type 'Quantity'.
+SetQuantity({"quantity":3})
+  tool message sent back to the model: quantity set to 3
+SetAccount({"account":"FR76"})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.String' cannot be converted to type 'Iban'.
+SetAccount({"account":"FR7630006000011234567890189"})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.String' cannot be converted to type 'Iban'.
+SetCheckedQuantity({"quantity":500})
+  tool message sent back to the model: Error: Exception while invoking function. A quantity is between 1 and 100. (Parameter 'quantity')
+Actual value was 500.
+
+== OpenAI connector, FunctionChoiceBehavior.Auto(), RetainArgumentTypes = True
+SetQuantity({"quantity":500})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.Text.Json.JsonElement' cannot be converted to type 'Quantity'.
+SetQuantity({"quantity":3})
+  tool message sent back to the model: quantity set to 3
+SetAccount({"account":"FR76"})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.Text.Json.JsonElement' cannot be converted to type 'Iban'.
+SetAccount({"account":"FR7630006000011234567890189"})
+  tool message sent back to the model: account set to FR7630006000011234567890189
+SetCheckedQuantity({"quantity":500})
+  tool message sent back to the model: Error: Exception while invoking function. Object of type 'System.Text.Json.JsonElement' cannot be converted to type 'CheckedQuantity'.
+
+SetQuantity.InvokeAsync, quantity = JsonElement 500 (what RetainArgumentTypes = true hands over):
+  System.ArgumentException: Object of type 'System.Text.Json.JsonElement' cannot be converted to type 'Quantity'.
+  at System.RuntimeType.CheckValue(Object& value, Binder binder, CultureInfo culture, BindingFlags invokeAttr)
+  at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  at Microsoft.SemanticKernel.KernelFunctionFromMethod.Invoke(MethodInfo method, Object target, Object[] arguments)
+SetQuantity.InvokeAsync, quantity = string "500" (what RetainArgumentTypes = false hands over):
+  System.ArgumentException: Object of type 'System.String' cannot be converted to type 'Quantity'.
+  at System.RuntimeType.CheckValue(Object& value, Binder binder, CultureInfo culture, BindingFlags invokeAttr)
+  at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  at Microsoft.SemanticKernel.KernelFunctionFromMethod.Invoke(MethodInfo method, Object target, Object[] arguments)
