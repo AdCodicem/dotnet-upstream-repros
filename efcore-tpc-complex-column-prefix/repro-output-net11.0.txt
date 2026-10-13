@@ -1,0 +1,21 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+===== TphContext
+  Vessel: Id <- Id, Cars <- Cars, Discriminator <- Discriminator, Shipping_Zip <- Shipping.Zip
+===== TptContext
+  Ferries: Id <- Id, Cars <- Cars
+  Vessel: Id <- Id, Shipping_Zip <- Shipping.Zip
+===== TpcContext
+  Ferries: Id <- Id, Cars <- Cars, Zip <- Shipping.Zip
+===== TpcConcreteRootContext
+  Ships: Id <- Id, Shipping_Zip <- Shipping.Zip
+  Tankers: Id <- Id, Tons <- Tons, Zip <- Shipping.Zip
+===== TpcTwoAddressesContext
+  Ferries: Id <- Id, Cars <- Cars, Vessel_Zip <- Shipping.Zip, Zip <- Billing.Zip
+===== TpcNestedContext
+  Ferries: Id <- Id, Address_Zip <- Port.Address.Zip, Cars <- Cars, Zip <- Port.Zip
+===== TpcExplicitNamesContext
+  Ferries: Id <- Id, Billing_Zip <- Billing.Zip, Cars <- Cars, Shipping_Zip <- Shipping.Zip
+===== TpcContext: saved Ferry 1 with Shipping.Zip = 75001
+===== migration from TpcContext to TpcTwoAddressesContext (Billing added)
+  ALTER TABLE "Ferries" ADD "Vessel_Zip" TEXT NOT NULL DEFAULT '';
+===== TpcTwoAddressesContext: read Ferry 1 with Shipping.Zip = '', Billing.Zip = '75001'

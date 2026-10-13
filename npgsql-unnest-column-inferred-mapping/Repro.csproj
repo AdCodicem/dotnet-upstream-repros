@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- repro.sh sets REPRO_TFM, REPRO_EF_VERSION and REPRO_NPGSQL_VERSION; the defaults are the latest 10.0 releases. -->
+    <TargetFramework>$(REPRO_TFM)</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net10.0</TargetFramework>
+    <EfCoreVersion>$(REPRO_EF_VERSION)</EfCoreVersion>
+    <EfCoreVersion Condition="'$(EfCoreVersion)' == ''">10.0.12</EfCoreVersion>
+    <NpgsqlVersion>$(REPRO_NPGSQL_VERSION)</NpgsqlVersion>
+    <NpgsqlVersion Condition="'$(NpgsqlVersion)' == ''">10.0.3</NpgsqlVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- fix-check/ is a project of its own. -->
+    <Compile Remove="fix-check/**" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="$(NpgsqlVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EfCoreVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EfCoreVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EfCoreVersion)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+
+== The repro: dotnet run
+1. scalar Quantity? = Quantity(0): stored Single=NULL Lines=[] Codes=[]
+2. List<Quantity?> = [5, null]: stored Single=NULL Lines=[5,null] Codes=[]
+3. List<Quantity?> = [5, Quantity(0)]: stored Single=NULL Lines=[5,null] Codes=[]
+4. List<Code?> = ["A", Code("")]: stored Single=NULL Lines=[] Codes=["A",null]
+5. read scalar Single = 0: Single=null Lines=[]
+6. read Lines = [5,0]:
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Storage.Json.JsonCastValueReaderWriter`1.FromJsonTyped(Utf8JsonReaderManager& manager, Object existingObject)
+   at Microsoft.EntityFrameworkCore.Storage.Json.JsonCollectionOfNullableStructsReaderWriter`2.FromJsonTyped(Utf8JsonReaderManager& manager, Object existingObject)
+   at Microsoft.EntityFrameworkCore.Storage.Json.JsonValueReaderWriter`1.FromJson(Utf8JsonReaderManager& manager, Object existingObject)
+   at Microsoft.EntityFrameworkCore.Query.RelationalShapedQueryCompilingExpressionVisitor.ShaperProcessingExpressionVisitor.ReadPrimitiveCollectionFromJson(String json, JsonValueReaderWriter readerWriter, Boolean nullable, String propertyName)
+   at lambda_method76(Closure, QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+   at System.Linq.Enumerable.TryGetSingle[TSource](IEnumerable`1 source, Boolean& found)
+   at lambda_method74(Closure, QueryContext)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.Execute[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.Execute[TResult](Expression expression)
+   at Program.<<Main>$>g__Read|0_1(String label, Int32 id, <>c__DisplayClass0_0&) in <repro>\Program.cs:line 49
+
+== Variants: dotnet run --project variants
+A. write List<int?> = [5, 0], element converter ValueConverter<int?, int?> mapping 0 to null: stored Plain=[5,null]
+B. read List<int?> from [5,0], the same converter: NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.EntityFrameworkCore.Storage.Json.JsonCastValueReaderWriter`1.FromJsonTyped(Utf8JsonReaderManager& manager, Object existingObject)
+   at Microsoft.EntityFrameworkCore.Storage.Json.JsonCollectionOfNullableStructsReaderWriter`2.FromJsonTyped(Utf8JsonReaderManager& manager, Object existingObject)
+C. write List<Quantity?> = [5, Quantity(0)], the converter built with convertsNulls: true: stored Flagged=[5,null]
+D. wanted.Contains(o.Single), wanted = [Quantity(0)], the default mode: 0 row(s)
+
+== Variants, the collection parameter sent as one JSON parameter: dotnet run --project variants -- --parameter-mode
+D. wanted.Contains(o.Single), wanted = [Quantity(0)], ParameterTranslationMode.Parameter: 0 row(s)

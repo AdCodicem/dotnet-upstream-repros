@@ -1,0 +1,125 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, Npgsql.EntityFrameworkCore.PostgreSQL 11.0.0-rc.1.1, EF Core 11.0.0-rc.1.26425.128, PostgreSQL 17.11, MINGW64_NT-10.0-26200
+
+== The repro: dotnet run
+######## 1. Plain LINQ, no plugin
+== Npgsql
+   o.Tags.Union(o.Labels).Contains("x")
+      !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   o.Tags.Except(o.Labels).Any()
+      !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+== SqlServer
+   o.Tags.Union(o.Labels).Contains("x")
+      ok: WHERE N'x' IN ( SELECT [t].[value] FROM OPENJSON([o].[Tags]) WITH ([value] nvarchar(max) '$') AS [t] UNION SELECT [l].[value] FROM OPENJSON([o].[Labels]) WITH ([value] nvarchar(10) '$') AS [l] )
+   o.Tags.Except(o.Labels).Any()
+      ok: WHERE EXISTS ( SELECT 1 FROM ( SELECT [t].[value] FROM OPENJSON([o].[Tags]) WITH ([value] nvarchar(max) '$') AS [t] EXCEPT SELECT [l].[value] FROM OPENJSON([o].[Labels]) WITH ([value] nvarchar(10) '$') AS [l] ) AS [e])
+== Sqlite
+   o.Tags.Union(o.Labels).Contains("x")
+      ok: WHERE 'x' IN ( SELECT "t"."value" FROM json_each("o"."Tags") AS "t" UNION SELECT "l"."value" FROM json_each("o"."Labels") AS "l" )
+   o.Tags.Except(o.Labels).Any()
+      ok: WHERE EXISTS ( SELECT 1 FROM ( SELECT "t"."value" FROM json_each("o"."Tags") AS "t" EXCEPT SELECT "l"."value" FROM json_each("o"."Labels") AS "l" ) AS "e")
+######## 2. With the member translator plugin (the column re-typed)
+== Npgsql
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE o."Code" LIKE @prefix_startswith
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      !! TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner ArgumentException: Expression of type 'System.Func`3[System.String,System.String,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Code,Code,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Code], System.Collections.Generic.IEnumerable`1[Code], System.Func`3[Code,Code,System.Boolean])' (Parameter 'arg2')
+   o.Quantities.Any(q => q.Value > least)
+      !! TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner ArgumentException: Expression of type 'System.Func`3[System.Int16,System.Int16,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Quantity,Quantity,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Quantity], System.Collections.Generic.IEnumerable`1[Quantity], System.Func`3[Quantity,Quantity,System.Boolean])' (Parameter 'arg2')
+== SqlServer
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE [o].[Code] LIKE @prefix_startswith ESCAPE N'\'
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      ok: WHERE EXISTS ( SELECT 1 FROM OPENJSON([o].[Codes]) WITH ([value] nvarchar(34) '$') AS [c] WHERE [c].[value] LIKE @prefix_startswith ESCAPE N'\')
+   o.Quantities.Any(q => q.Value > least)
+      ok: WHERE EXISTS ( SELECT 1 FROM OPENJSON([o].[Quantities]) WITH ([value] smallint '$') AS [q] WHERE [q].[value] > @least)
+== Sqlite
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE "o"."Code" LIKE @prefix_startswith ESCAPE '\'
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      ok: WHERE EXISTS ( SELECT 1 FROM json_each("o"."Codes") AS "c" WHERE "c"."value" LIKE @prefix_startswith ESCAPE '\')
+   o.Quantities.Any(q => q.Value > least)
+      ok: WHERE EXISTS ( SELECT 1 FROM json_each("o"."Quantities") AS "q" WHERE "q"."value" > @least)
+######## 3. With the plugin writing a CAST instead (workaround)
+== Npgsql
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE o."Code" LIKE @prefix_startswith
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      ok: WHERE EXISTS ( SELECT 1 FROM unnest(o."Codes") AS c(value) WHERE c.value LIKE @prefix_startswith)
+   o.Quantities.Any(q => q.Value > least)
+      ok: WHERE EXISTS ( SELECT 1 FROM unnest(o."Quantities") AS q(value) WHERE q.value > @least)
+== SqlServer
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE [o].[Code] LIKE @prefix_startswith ESCAPE N'\'
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      ok: WHERE EXISTS ( SELECT 1 FROM OPENJSON([o].[Codes]) WITH ([value] nvarchar(34) '$') AS [c] WHERE [c].[value] LIKE @prefix_startswith ESCAPE N'\')
+   o.Quantities.Any(q => q.Value > least)
+      ok: WHERE EXISTS ( SELECT 1 FROM OPENJSON([o].[Quantities]) WITH ([value] smallint '$') AS [q] WHERE [q].[value] > @least)
+== Sqlite
+   o.Code.Value.StartsWith(prefix)
+      ok: WHERE "o"."Code" LIKE @prefix_startswith ESCAPE '\'
+   o.Codes.Any(c => c.Value.StartsWith(prefix))
+      ok: WHERE EXISTS ( SELECT 1 FROM json_each("o"."Codes") AS "c" WHERE "c"."value" LIKE @prefix_startswith ESCAPE '\')
+   o.Quantities.Any(q => q.Value > least)
+      ok: WHERE EXISTS ( SELECT 1 FROM json_each("o"."Quantities") AS "q" WHERE "q"."value" > @least)
+######## The same on PostgreSQL, executed
+   o.Tags.Union(o.Labels).Contains("x") [no plugin]:
+      !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   o.Tags.Except(o.Labels).Any() [no plugin]:
+      !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   o.Code.Value.StartsWith(prefix) [Column]: 1 row(s)
+   o.Codes.Any(c => c.Value.StartsWith(prefix)) [Column]:
+      !! TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner ArgumentException: Expression of type 'System.Func`3[System.String,System.String,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Code,Code,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Code], System.Collections.Generic.IEnumerable`1[Code], System.Func`3[Code,Code,System.Boolean])' (Parameter 'arg2')
+   o.Quantities.Any(q => q.Value > least) [Column]:
+      !! TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner TargetInvocationException: Exception has been thrown by the target of an invocation.
+         inner ArgumentException: Expression of type 'System.Func`3[System.Int16,System.Int16,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Quantity,Quantity,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Quantity], System.Collections.Generic.IEnumerable`1[Quantity], System.Func`3[Quantity,Quantity,System.Boolean])' (Parameter 'arg2')
+   o.Code.Value.StartsWith(prefix) [Cast]: 1 row(s)
+   o.Codes.Any(c => c.Value.StartsWith(prefix)) [Cast]: 1 row(s)
+   o.Quantities.Any(q => q.Value > least) [Cast]: 1 row(s)
+
+== The proposed change: dotnet run --project fix-check
+== o.Tags.Union(o.Labels).Contains("x")   (expected: 1 row)
+   as shipped:               !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   with the proposed change: 1 row(s)
+      WHERE 'x' IN ( SELECT t.value FROM unnest(o."Tags") AS t(value) UNION SELECT l.value FROM unnest(o."Labels") AS l(value) )
+== o.Tags.Except(o.Labels).Any()   (expected: 1 row)
+   as shipped:               !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   with the proposed change: 1 row(s)
+      WHERE EXISTS ( SELECT 1 FROM ( SELECT t.value FROM unnest(o."Tags") AS t(value) EXCEPT SELECT l.value FROM unnest(o."Labels") AS l(value) ) AS e)
+== o.Tags.Select(t => t + "!").Union(o.Labels.Select(l => l + "!")).Contains("x!")   (expected: 1 row)
+   as shipped:               1 row(s)
+      WHERE 'x!' IN ( SELECT t.value || '!' AS c FROM unnest(o."Tags") AS t(value) UNION SELECT l.value || '!' AS c FROM unnest(o."Labels") AS l(value) )
+   with the proposed change: 1 row(s)
+      WHERE 'x!' IN ( SELECT t.value || '!' AS c FROM unnest(o."Tags") AS t(value) UNION SELECT l.value || '!' AS c FROM unnest(o."Labels") AS l(value) )
+== o.Codes.Any(c => c.Value.StartsWith(prefix))   (expected: 1 row)
+   as shipped:               !! ArgumentException: Expression of type 'System.Func`3[System.String,System.String,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Code,Code,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Code], System.Collections.Generic.IEnumerable`1[Code], System.Func`3[Code,Code,System.Boolean])' (Parameter 'arg2')
+   with the proposed change: 1 row(s)
+      WHERE EXISTS ( SELECT 1 FROM unnest(o."Codes") AS c(value) WHERE c.value LIKE @prefix_startswith)
+== o.Quantities.Any(q => q.Value > least)   (expected: 1 row)
+   as shipped:               !! ArgumentException: Expression of type 'System.Func`3[System.Int16,System.Int16,System.Boolean]' cannot be used for parameter of type 'System.Func`3[Quantity,Quantity,System.Boolean]' of method 'Boolean Compare(System.Collections.Generic.IEnumerable`1[Quantity], System.Collections.Generic.IEnumerable`1[Quantity], System.Func`3[Quantity,Quantity,System.Boolean])' (Parameter 'arg2')
+   with the proposed change: 1 row(s)
+      WHERE EXISTS ( SELECT 1 FROM unnest(o."Quantities") AS q(value) WHERE q.value > @least)
+== prefixes.Any(p => o.Code.Value.StartsWith(p)), a string[] parameter   (expected: 1 row)
+   as shipped:               1 row(s)
+      WHERE EXISTS ( SELECT 1 FROM unnest(@prefixes) AS p(value) WHERE p.value IS NOT NULL AND left(o."Code", length(p.value)) = p.value)
+   with the proposed change: 1 row(s)
+      WHERE EXISTS ( SELECT 1 FROM unnest(@prefixes) AS p(value) WHERE p.value IS NOT NULL AND left(o."Code", length(p.value)) = p.value)
+== codes.Contains(o.Code.Value), a string[] parameter   (expected: 1 row)
+   as shipped:               1 row(s)
+      WHERE o."Code" = ANY (@codes)
+   with the proposed change: 1 row(s)
+      WHERE o."Code" = ANY (@codes)
+== o.Tags.Intersect(prefixes).Any(), a column and a string[] parameter   (expected: 0 rows)
+   as shipped:               0 row(s)
+      WHERE o."Tags" && @prefixes
+   with the proposed change: 0 row(s)
+      WHERE o."Tags" && @prefixes
+== o.Numbers.Union(o.TextNumbers).Contains(1), integer[] and text[]   (expected: refused)
+   as shipped:               !! InvalidOperationException: Conflicting type mappings were inferred for column 'value'.
+   with the proposed change: !! PostgresException: 42804: UNION types integer and character varying cannot be matched

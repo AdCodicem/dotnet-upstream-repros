@@ -8,6 +8,9 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 |--------|-------------|--------------------|----------------|
 | [`efcore-precompiled-converter-cast`](efcore-precompiled-converter-cast) | [dotnet/efcore#39174](https://github.com/dotnet/efcore/issues/39174) | Yes | Yes |
 | [`efcore-precompiled-enum-parameter`](efcore-precompiled-enum-parameter) | [dotnet/efcore#33541](https://github.com/dotnet/efcore/issues/33541#issuecomment-6002610956) (comment) | Yes | Yes |
+| [`efcore-tpc-complex-column-prefix`](efcore-tpc-complex-column-prefix) | dotnet/efcore | Not reachable: 10.0 maps no column there | Yes |
+| [`efcore-primitive-collection-converter-null-element`](efcore-primitive-collection-converter-null-element) | dotnet/efcore | Yes | The read; the write is fixed |
+| [`npgsql-unnest-column-inferred-mapping`](npgsql-unnest-column-inferred-mapping) | npgsql/efcore.pg | Yes | Yes |
 | [`aspnetcore-rdg-shared-interceptor`](aspnetcore-rdg-shared-interceptor) | [dotnet/aspnetcore#69676](https://github.com/dotnet/aspnetcore/issues/69676) (10.0 backport of #67591) | Yes | Fixed |
 | [`aspnetcore-rdg-default-value`](aspnetcore-rdg-default-value) | [dotnet/aspnetcore#69675](https://github.com/dotnet/aspnetcore/issues/69675) | Yes | Yes |
 | [`aspnetcore-rdg-cast-rebuilt-from-method`](aspnetcore-rdg-cast-rebuilt-from-method) | [dotnet/aspnetcore#69755](https://github.com/dotnet/aspnetcore/issues/69755) | Yes | Yes |
@@ -36,5 +39,9 @@ REPRO_TFM=net11.0 ./aspnetcore-rdg-default-value/repro.sh          # .NET 11 RC1
 The two `mcp-csharp-*` folders with a `client/` also need Node.js: they run the TypeScript SDK's client against the
 C# server.
 
-The EF Core folders install `dotnet-ef` locally, under `.tools/`, at the same version as the packages, and point
-`DOTNET_ROOT` at the `dotnet` on `PATH` when it is not set, so an SDK installed in a folder works too.
+The `efcore-precompiled-*` folders install `dotnet-ef` locally, under `.tools/`, at the same version as the packages,
+and point `DOTNET_ROOT` at the `dotnet` on `PATH` when it is not set, so an SDK installed in a folder works too.
+
+`npgsql-unnest-column-inferred-mapping` and `efcore-primitive-collection-converter-null-element` run without a
+database server. With `REPRO_DOCKER=1` they also start PostgreSQL 17, or SQL Server 2022, in a container they remove,
+for the part that needs one. `efcore-tpc-complex-column-prefix` runs on .NET 11 only.
