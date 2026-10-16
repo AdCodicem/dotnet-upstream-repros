@@ -1,0 +1,36 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== Cases/if-else.cs: ConfigureFunctionsWebApplication in one branch, ConfigureFunctionsWorkerDefaults in the other
+CSC : warning AD0001: Analyzer 'Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 0
+
+== the AD0001 message in full, from the compiler's error log
+Analyzer 'Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'.
+Exception occurred with following context:
+Compilation: Repro
+ISymbol: <Main>$ (Method)
+
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration.GetSymbolLocation(SyntaxNode root, IEnumerable`1 methodCallExpressions) in /_/extensions/Worker.Extensions.Http.AspNetCore.Analyzers/src/RegistrationExpectedInASPNetIntegration.cs:line 90
+   at Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration.AnalyzeMethod(SymbolAnalysisContext context) in /_/extensions/Worker.Extensions.Http.AspNetCore.Analyzers/src/RegistrationExpectedInASPNetIntegration.cs:line 60
+   at Microsoft.CodeAnalysis.Diagnostics.AnalyzerExecutor.ExecuteAndCatchIfThrows_NoLock[TArg](DiagnosticAnalyzer analyzer, Action`1 analyze, TArg argument, Nullable`1 info, CancellationToken cancellationToken)
+-----
+
+Suppress the following diagnostics to disable this analyzer: AZFW0014
+
+
+== Cases/if-else.cs, -p:TreatWarningsAsErrors=true
+CSC : error AD0001: Analyzer 'Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 1
+
+== Cases/statement.cs: hostBuilder.ConfigureFunctionsWorkerDefaults(); as a statement
+CSC : warning AD0001: Analyzer 'Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.RegistrationExpectedInASPNetIntegration' threw an exception of type 'System.NullReferenceException' with message 'Object reference not set to an instance of an object.'. [<repro>\Repro.csproj]
+dotnet build: exit code 0
+
+== Cases/assigned.cs: var configured = hostBuilder.ConfigureFunctionsWorkerDefaults(); (control)
+<repro>\Cases\assigned.cs(9,38): error AZFW0014: The registration for method 'ConfigureFunctionsWebApplication' is expected for ASP.NET Core Integration. (https://aka.ms/azfw-rules?ruleid=AZFW0014) [<repro>\Repro.csproj]
+dotnet build: exit code 1
+
+== Cases/column0.cs: the statement of Cases/statement.cs at column 0 (control)
+<repro>\Cases\column0.cs(9,13): error AZFW0014: The registration for method 'ConfigureFunctionsWebApplication' is expected for ASP.NET Core Integration. (https://aka.ms/azfw-rules?ruleid=AZFW0014) [<repro>\Repro.csproj]
+dotnet build: exit code 1

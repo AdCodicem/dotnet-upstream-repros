@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "Holidays", "version": "1" },
+  "paths": {
+    "/holidays/{id}": {
+      "get": {
+        "operationId": "GetHoliday",
+        "parameters": [ { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } } ],
+        "responses": {
+          "200": {
+            "description": "The holiday",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Holiday" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PublicHoliday": {
+        "type": "string",
+        "format": "date",
+        "enum": [ "2026-01-01", "2026-12-25" ],
+        "x-enumNames": [ "NewYear", "Christmas" ]
+      },
+      "Holiday": {
+        "type": "object",
+        "properties": {
+          "day": { "$ref": "#/components/schemas/PublicHoliday" },
+          "plainDate": { "type": "string", "format": "date" },
+          "color": { "type": "string", "enum": [ "red", "green" ] }
+        }
+      }
+    }
+  }
+}

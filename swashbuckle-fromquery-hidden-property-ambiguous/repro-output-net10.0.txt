@@ -1,0 +1,45 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== Swashbuckle.AspNetCore 10.3.0
+Swashbuckle.AspNetCore.SwaggerGen 10.3.0.0
+GET /search?code=42 -> Code = 42
+GET /swagger/v1/swagger.json -> 500
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - SearchController.Search (Repro). See inner exception
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Program.<Main>$(String[] args)
+System.AggregateException: One or more errors occurred. (Ambiguous match found for 'DerivedQuery Int32 Code'.)
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRepository, OpenApiDocument document)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.<GenerateOperation>b__21_0(ApiDescription description, SchemaRepository repository, OpenApiDocument document)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(OpenApiDocument document, ApiDescription apiDescription, SchemaRepository schemaRepository, Func`4 parametersGenerator, Func`4 bodyGenerator, Func`3 applyFilters)
+System.Reflection.AmbiguousMatchException: Ambiguous match found for 'DerivedQuery Int32 Code'.
+   at System.RuntimeType.GetPropertyImpl(String name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
+   at System.Type.GetProperty(String name, BindingFlags bindingAttr)
+   at Swashbuckle.AspNetCore.SwaggerGen.ApiParameterDescriptionExtensions.PropertyInfo(ApiParameterDescription apiParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.ApiParameterDescriptionExtensions.CustomAttributes(ApiParameterDescription apiParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.<>c.<GenerateParametersAsync>b__25_0(ApiParameterDescription apiParam)
+   at System.Linq.Enumerable.ListWhereIterator`1.MoveNext()
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, OpenApiDocument document, Func`4 parameterGenerator)
+
+== Swashbuckle.AspNetCore 6.9.0
+Swashbuckle.AspNetCore.SwaggerGen 6.9.0.0
+GET /search?code=42 -> Code = 42
+GET /swagger/v1/swagger.json -> 500
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Failed to generate Operation for action - SearchController.Search (Repro). See inner exception
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwagger(String documentName, String host, String basePath)
+   at Program.<Main>$(String[] args)
+System.AggregateException: One or more errors occurred. (Ambiguous match found for 'DerivedQuery Int32 Code'.)
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParameters(ApiDescription apiDescription, SchemaRepository schemaRespository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.<GenerateOperation>b__20_0(ApiDescription description, SchemaRepository repository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationAsync(ApiDescription apiDescription, SchemaRepository schemaRepository, Func`3 parametersGenerator, Func`3 bodyGenerator, Func`3 applyFilters)
+System.Reflection.AmbiguousMatchException: Ambiguous match found for 'DerivedQuery Int32 Code'.
+   at System.RuntimeType.GetPropertyImpl(String name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
+   at System.Type.GetProperty(String name, BindingFlags bindingAttr)
+   at Swashbuckle.AspNetCore.SwaggerGen.ApiParameterDescriptionExtensions.PropertyInfo(ApiParameterDescription apiParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.ApiParameterDescriptionExtensions.CustomAttributes(ApiParameterDescription apiParameter)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.<>c.<GenerateParametersAsync>b__24_0(ApiParameterDescription apiParam)
+   at System.Linq.Enumerable.ListWhereIterator`1.MoveNext()
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateParametersAsync(ApiDescription apiDescription, SchemaRepository schemaRespository, Func`3 parameterGenerator)

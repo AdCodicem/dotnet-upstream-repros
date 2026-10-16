@@ -1,0 +1,10 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+-- the wire: {"account":"FR7630006000011234567890189","fallback":null,"history":["DE89370400440532013000"],"byName":{"main":"GB29NWBK60161331926819"}}
+-- the schema: {"type":["object","null"],"properties":{"account":true,"fallback":true,"history":{"type":"array"},"byName":{"type":"object"}},"required":["account","fallback","history","byName"]}
+-- the nodes TransformSchemaNode is called for:
+   /properties/account: Iban (None) true
+   /properties/fallback: Iban? (None) true
+   /properties/history: List`1 (Enumerable) {"type":"array"}
+   /properties/byName: Dictionary`2 (Dictionary) {"type":"object"}
+   /: Order (Object) {"type":["object","null"],"properties":{"account":true,"fallback":true,"history":{"type":"array"},"byName":{"type":"object"}},"required":["account","fallback","history","byName"]}

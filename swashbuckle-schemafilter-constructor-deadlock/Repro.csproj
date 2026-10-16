@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <!-- repro.sh sets REPRO_TFM and REPRO_SWASHBUCKLE_VERSION; the defaults are .NET 10 and 10.3.0, the latest release. -->
+    <TargetFramework>$(REPRO_TFM)</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net10.0</TargetFramework>
+    <SwashbuckleVersion>$(REPRO_SWASHBUCKLE_VERSION)</SwashbuckleVersion>
+    <SwashbuckleVersion Condition="'$(SwashbuckleVersion)' == ''">10.3.0</SwashbuckleVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="$(SwashbuckleVersion)" />
+  </ItemGroup>
+
+</Project>

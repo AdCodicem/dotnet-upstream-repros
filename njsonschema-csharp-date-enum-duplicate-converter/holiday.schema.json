@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Holiday",
+  "type": "object",
+  "properties": {
+    "day": { "$ref": "#/definitions/PublicHoliday" },
+    "plainDate": { "type": "string", "format": "date" },
+    "color": { "type": "string", "enum": [ "red", "green" ] }
+  },
+  "definitions": {
+    "PublicHoliday": {
+      "type": "string",
+      "format": "date",
+      "enum": [ "2026-01-01", "2026-12-25" ],
+      "x-enumNames": [ "NewYear", "Christmas" ]
+    }
+  }
+}

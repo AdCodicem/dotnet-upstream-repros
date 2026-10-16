@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishAot>true</PublishAot>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <!-- [ProtoModel] is [Experimental("PBN9001")]. -->
+    <NoWarn>$(NoWarn);PBN9001</NoWarn>
+    <!-- repro.sh sets -p:ReproMembers=MEMBERS to give Quantity its two ordinary members. -->
+    <DefineConstants>$(DefineConstants);$(ReproMembers)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="protobuf-net" Version="3.4.30" />
+  </ItemGroup>
+
+</Project>

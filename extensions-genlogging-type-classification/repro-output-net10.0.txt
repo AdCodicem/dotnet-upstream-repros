@@ -1,0 +1,23 @@
+== .NET SDK 10.0.402, net10.0, Microsoft.Extensions.Telemetry.Abstractions 10.11.0, MINGW64_NT-10.0-26200
+
+== runtime: where the generated code puts each tag
+   ParameterClassified:
+     ClassifiedTagArray[0] = new("email", email, new global::Microsoft.Extensions.Compliance.Classification.DataClassificationSet(_PersonalDataAttribute));
+   TypeClassified:
+     TagArray[0] = new("email", email);
+   RecordWithTypeClassifiedMember:
+     TagArray[0] = new("Contact", contact);
+
+== runtime: what reaches the logger provider, a redactor configured for every classification
+1. [PersonalData] on the parameter (redacted, as expected):
+   "email":"<redacted>"
+2. [PersonalData] on the parameter's type (expected redacted):
+   "email":"jane@example.com"
+3. A record logged whole whose property's type is [PersonalData] (expected LOGGEN035, as for a [PersonalData] property):
+   "Contact":"Contact { Email = jane@example.com }"
+
+== record-check: LOGGEN035 for a record whose property, or the record type of its property, is classified; nothing when the property's type is a classified struct
+<repro>\record-check\Library.cs(29,32): error CS8795: Partial method 'Log.PropertyClassified(ILogger, ClassifiedContact)' must have an implementation part because it has accessibility modifiers.
+<repro>\record-check\Library.cs(29,85): warning LOGGEN035: Parameter "contact" of logging method "PropertyClassified" has a sensitive field/property in its type (https://aka.ms/dotnet-extensions-warnings/LOGGEN035)
+<repro>\record-check\Library.cs(32,32): error CS8795: Partial method 'Log.RecordTypeClassified(ILogger, Wallet)' must have an implementation part because it has accessibility modifiers.
+<repro>\record-check\Library.cs(32,76): warning LOGGEN035: Parameter "wallet" of logging method "RecordTypeClassified" has a sensitive field/property in its type (https://aka.ms/dotnet-extensions-warnings/LOGGEN035)

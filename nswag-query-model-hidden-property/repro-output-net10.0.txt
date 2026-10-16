@@ -1,0 +1,14 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+GET /same-type?code=FR -> 200 Code = FR
+GET /other-type?code=42 -> 200 Code = 42
+
+IOpenApiDocumentGenerator.GenerateAsync("v1") threw System.Reflection.AmbiguousMatchException: Ambiguous match found for 'OtherTypeQuery Int32 Code'.
+   at System.RuntimeType.GetPropertyImpl(String name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
+   at System.Type.GetProperty(String name, BindingFlags bindingAttr)
+   at NSwag.Generation.AspNetCore.Processors.OperationParameterProcessor.Process(OperationProcessorContext operationProcessorContext)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.RunOperationProcessors(OpenApiDocument document, ApiDescription apiDescription, Type controllerType, MethodInfo methodInfo, OpenApiOperationDescription operationDescription, List`1 allOperations, OpenApiDocumentGenerator generator, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.AddOperationDescriptionsToDocument(OpenApiDocument document, Type controllerType, List`1 operations, OpenApiDocumentGenerator swaggerGenerator, OpenApiSchemaResolver schemaResolver)
+   at NSwag.Generation.AspNetCore.AspNetCoreOpenApiDocumentGenerator.GenerateApiGroups(OpenApiDocumentGenerator generator, OpenApiDocument document, IGrouping`2[] apiGroups, OpenApiSchemaResolver schemaResolver)
+
+typeof(SameTypeQuery).GetProperty("Code", Public | Instance) -> String SameTypeQuery.Code
+typeof(OtherTypeQuery).GetProperty("Code", Public | Instance) -> System.Reflection.AmbiguousMatchException: Ambiguous match found for 'OtherTypeQuery Int32 Code'.

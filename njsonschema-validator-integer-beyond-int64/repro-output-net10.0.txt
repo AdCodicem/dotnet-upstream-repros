@@ -1,0 +1,43 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+schema {}
+  9223372036854775807    -> valid
+  9223372036854775808    -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551615   -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551616   -> System.InvalidCastException: Object must implement IConvertible.
+  1e20                   -> valid
+schema { "type": "integer" }
+  9223372036854775807    -> valid
+  9223372036854775808    -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551615   -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551616   -> System.InvalidCastException: Object must implement IConvertible.
+  1e20                   -> IntegerExpected
+schema { "type": "number" }
+  9223372036854775807    -> valid
+  9223372036854775808    -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551615   -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551616   -> System.InvalidCastException: Object must implement IConvertible.
+  1e20                   -> valid
+schema { "type": "string" }
+  9223372036854775807    -> StringExpected
+  9223372036854775808    -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551615   -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551616   -> System.InvalidCastException: Object must implement IConvertible.
+  1e20                   -> StringExpected
+schema { "type": "integer", "minimum": 0, "maximum": 18446744073709551615 }
+  9223372036854775807    -> valid
+  9223372036854775808    -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551615   -> System.InvalidCastException: Object must implement IConvertible.
+  18446744073709551616   -> System.InvalidCastException: Object must implement IConvertible.
+  1e20                   -> NumberTooBig, IntegerExpected
+schema { "type": "object", "properties": { "id": { "type": "integer" } } }
+  {"id":18446744073709551615} -> System.InvalidCastException: Object must implement IConvertible.
+
+stack trace of the first case:
+   at System.Convert.ChangeType(Object value, Type conversionType, IFormatProvider provider)
+   at Newtonsoft.Json.Linq.Extensions.Convert[T,U](T token)
+   at Newtonsoft.Json.Linq.Extensions.Value[T,U](IEnumerable`1 value)
+   at Newtonsoft.Json.Linq.Extensions.Value[U](IEnumerable`1 value)
+   at NJsonSchema.Validation.JsonSchemaValidator.ValidateNumber(JToken token, JsonSchema schema, JsonObjectType type, String propertyName, String propertyPath, List`1 errors)
+   at NJsonSchema.Validation.JsonSchemaValidator.ValidateType(JToken token, JsonSchema schema, SchemaType schemaType, String propertyName, String propertyPath, List`1 errors)
+   at NJsonSchema.Validation.JsonSchemaValidator.Validate(JToken token, JsonSchema schema, SchemaType schemaType, String propertyName, String propertyPath)
+   at NJsonSchema.Validation.JsonSchemaValidator.Validate(JToken token, JsonSchema schema, SchemaType schemaType)

@@ -1,0 +1,18 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+.NET 11.0.0-rc.1.26425.128, Microsoft.AspNetCore.Components.Endpoints 11.0.0-rc.1.26425.128+3551975be08744f0418857c5bed8ab1545c5dd47
+
+POST / (every input left empty) -> 200
+Code   (Code?) = null
+Number (int?)  = null
+Id     (Guid?) = null
+Tag    (Tag?)  = Tag("")
+valid: False
+mapping errors: The value '' is not valid for 'Code'.
+
+POST / (every input filled) -> 200
+Code   (Code?) = ABC
+Number (int?)  = 7
+Id     (Guid?) = 6f9619ff-8b86-d011-b42d-00c04fc964ff
+Tag    (Tag?)  = Tag("x")
+valid: True
+mapping errors: none

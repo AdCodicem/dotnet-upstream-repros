@@ -1,0 +1,68 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+Microsoft.AspNetCore.JsonPatch 11.0.0-rc.1.26425.128, Newtonsoft.Json 13.0.4, local UTC offset on 2024-05-01: 02:00:00
+
+== 1. ConvertTo reads a value back under settings holding the contract resolver alone, and swallows the converter's exception
+1a. DateTimeOffset, Newtonsoft.Json's default settings
+  body  {"placedAt":"2024-05-01T10:00:00+05:30"} -> 2024-05-01T10:00:00.0000000+05:30
+  patch [{"op":"replace","path":"/placedAt","value":"2024-05-01T10:00:00+05:30"}] -> 2024-05-01T06:30:00.0000000+02:00
+1b. decimal, Newtonsoft.Json's default settings
+  body  {"total":0.12345678901234567890} -> 0.12345678901234567890
+  patch [{"op":"replace","path":"/total","value":0.12345678901234567890}] -> 0.12345678901234568
+1c. the same two, under DateParseHandling.None and FloatParseHandling.Decimal (no conversion: the value is assignable)
+  body  {"placedAt":"2024-05-01T10:00:00+05:30","total":0.12345678901234567890} -> 2024-05-01T10:00:00.0000000+05:30, 0.12345678901234567890
+  patch [{"op":"replace","path":"/placedAt","value":"2024-05-01T10:00:00+05:30"},{"op":"replace","path":"/total","value":0.12345678901234567890}] -> 2024-05-01T10:00:00.0000000+05:30, 0.12345678901234567890
+1d. DateTime, DateTimeZoneHandling.Utc
+  body  {"shippedAt":"2024-05-01T10:00:00+05:30"} -> 2024-05-01T04:30:00.0000000Z (Kind Utc)
+  patch [{"op":"replace","path":"/shippedAt","value":"2024-05-01T10:00:00+05:30"}] -> 2024-05-01T06:30:00.0000000+02:00 (Kind Local)
+1e. a [JsonConverter] reading reader.Value, FloatParseHandling.Decimal
+  body  {"price":0.12345678901234567890} -> 0.12345678901234567890
+  patch [{"op":"replace","path":"/price","value":0.12345678901234567890}] -> 0.1234567890123456773698862321
+1f. a converter of JsonSerializerSettings.Converters
+  body  {"discount":15} -> 15
+  patch [{"op":"replace","path":"/discount","value":15}] -> JsonPatchError: The value '15' is invalid for target location. (operation path '/discount', from '')
+1g. the exception of the contract resolver's converter
+  body  {"sku":"abc"} -> JsonSerializationException: A SKU has exactly 8 characters.
+  patch [{"op":"replace","path":"/sku","value":"abc"}] -> JsonPatchError: The value 'abc' is invalid for target location. (operation path '/sku', from '')
+
+== 2. CopyTo, TryConvertKey and TryTest ignore the document's contract resolver
+  JsonConvert.SerializeObject(sku)                -> {}
+  JsonConvert.SerializeObject(sku, resolver)      -> "ABCD1234"
+2a. copy (CopyTo)
+  patch [{"op":"copy","from":"/sku","path":"/backupSku"}] -> sku ABCD1234, backupSku (default)
+2b. a dictionary key (TryConvertKey); the value, of the same type, converts
+  patch [{"op":"add","path":"/replacements/ABCD1234","value":"EFGH5678"}] -> JsonPatchError: The provided path segment 'ABCD1234' cannot be converted to the target type. (operation path '/replacements/ABCD1234', from '')
+2c. test (TryTest compares JsonConvert.SerializeObject of both values)
+  patch [{"op":"test","path":"/sku","value":"ZZZZZZZZ"}] -> test passed, sku is ABCD1234
+
+== 3. '-' where the list holds no element: ArgumentOutOfRangeException instead of a JsonPatchError
+3a. remove /empty/- (an empty list)
+  patch [{"op":"remove","path":"/empty/-"}] -> threw System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+        at Microsoft.AspNetCore.JsonPatch.Internal.ListAdapter.TryRemove(Object target, String segment, IContractResolver contractResolver, String& errorMessage)
+3b. replace /empty/- (an empty list)
+  patch [{"op":"replace","path":"/empty/-","value":1}] -> threw System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+        at Microsoft.AspNetCore.JsonPatch.Internal.ListAdapter.TryReplace(Object target, String segment, IContractResolver contractResolver, Object value, String& errorMessage)
+3c. copy from /empty/- (an empty list)
+  patch [{"op":"copy","from":"/empty/-","path":"/lines/-"}] -> threw System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+        at Microsoft.AspNetCore.JsonPatch.Internal.ListAdapter.TryGet(Object target, String segment, IContractResolver contractResolver, Object& value, String& errorMessage)
+3d. test /lines/- (lines is [1,2,3])
+  patch [{"op":"test","path":"/lines/-","value":3}] -> threw System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+        at Microsoft.AspNetCore.JsonPatch.Internal.ListAdapter.TryTest(Object target, String segment, IContractResolver contractResolver, Object value, String& errorMessage)
+3e. for comparison, remove /empty/0
+  patch [{"op":"remove","path":"/empty/0"}] -> JsonPatchError: The index value provided by path segment '0' is out of bounds of the array size. (operation path '/empty/0', from '')
+
+== 4. a missing path or from: ArgumentNullException instead of a JsonPatchError
+4a. replace without path
+  patch [{"op":"replace","value":1}] -> threw System.ArgumentNullException: Value cannot be null. (Parameter 'path')
+        at Microsoft.AspNetCore.JsonPatch.Internal.ParsedPath..ctor(String path)
+4b. copy without from
+  patch [{"op":"copy","path":"/total"}] -> threw System.ArgumentNullException: Value cannot be null. (Parameter 'fromLocation')
+        at Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.TryGetValue(String fromLocation, Object objectToGetValueFrom, Operation operation, Object& propertyValue)
+
+== 5. move adds the value at path after removing it from from failed: a copy, not a move
+5a. move from a get-only property, errors logged (as ApplyTo(model, ModelState))
+  patch [{"op":"move","from":"/reference","path":"/note"}] -> JsonPatchError: The property at path 'reference' could not be updated. (operation path '/note', from '/reference'); then reference R-1, note R-1
+5b. the same, ApplyTo(model) without an error callback
+  patch [{"op":"move","from":"/reference","path":"/note"}] -> threw Microsoft.AspNetCore.JsonPatch.Exceptions.JsonPatchException: The property at path 'reference' could not be updated.; then reference R-1, note null
+        at Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.Remove(String path, Object objectToApplyTo, Operation operationToReport)
+5c. for comparison, remove of the same property
+  patch [{"op":"remove","path":"/reference"}] -> JsonPatchError: The property at path 'reference' could not be updated. (operation path '/reference', from ''); then reference R-1, note null

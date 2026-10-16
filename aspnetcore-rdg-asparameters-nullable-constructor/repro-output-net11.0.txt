@@ -1,0 +1,20 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, MINGW64_NT-10.0-26200
+
+== EnableRequestDelegateGenerator=false: builds and runs
+GET /record?page=2 -> 2 null
+GET /record?page=2&sort=name -> 2 "name"
+GET /class?next=https://example.org/ -> "https://example.org/"
+GET /not-nullable?sort=name -> "name"
+GET /record-struct -> null
+GET /properties -> null
+
+== EnableRequestDelegateGenerator=true: each error once
+GeneratedRouteBuilderExtensions.g.cs(72,227): error CS8639: The typeof operator cannot be used on a nullable reference type
+GeneratedRouteBuilderExtensions.g.cs(73,226): error CS8639: The typeof operator cannot be used on a nullable reference type
+GeneratedRouteBuilderExtensions.g.cs(218,207): error CS8639: The typeof operator cannot be used on a nullable reference type
+dotnet build: exit code 1
+
+== Generated code: the constructor lookup of each [AsParameters] type
+typeof(LinkClass).GetConstructor(new[] { typeof(System.Uri?) })
+typeof(SearchRecord).GetConstructor(new[] { typeof(int), typeof(string?) })
+typeof(SortRecord).GetConstructor(new[] { typeof(string) })

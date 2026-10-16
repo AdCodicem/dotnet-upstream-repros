@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- repro.sh sets REPRO_TFM; the default is .NET 10. -->
+    <TargetFramework>$(REPRO_TFM)</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <!-- SYSLIB1045 suggests [GeneratedRegex] for the reference Regex instances built below. -->
+    <NoWarn>$(NoWarn);SYSLIB1045</NoWarn>
+  </PropertyGroup>
+
+</Project>

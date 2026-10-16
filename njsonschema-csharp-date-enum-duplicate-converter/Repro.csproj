@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="14.7.1" />
+    <!-- client/ is the project the generated code is compiled in, built on its own by repro.sh. -->
+    <Compile Remove="client/**" />
+    <None Remove="client/**" />
+  </ItemGroup>
+
+</Project>

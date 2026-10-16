@@ -1,0 +1,63 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== What the generator emitted (obj/Debug/net10.0/generated/System.Text.RegularExpressions.Generator/System.Text.RegularExpressions.Generator.RegexGenerator/RegexGenerator.g.cs)
+GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "10.0.15.504")
+   First_enUS                     -> First_enUS_0                    doc comment: set [Ii\u0130]
+   Second_trTR                    -> First_enUS_0                    doc comment: set [i\u0130]
+   First_trTR                     -> First_trTR_1                    doc comment: set [I\u0131]
+   Second_Invariant               -> First_trTR_1                    doc comment: set [Ii]
+   NonBacktracking_trTR           -> NonBacktracking_trTR_2          doc comment: set [i\u0130]
+   NonBacktracking_enUS           -> NonBacktracking_enUS_3          doc comment: set [Ii\u0130]
+   NonBacktracking_NoCultureName  -> NonBacktracking_NoCultureName_4 doc comment: set [IJij]
+   Deep_trTR                      -> Deep_trTR_5                     doc comment: set [i\u0130]
+   Shallow_trTR                   -> Shallow_trTR_6                  doc comment: set [i\u0130]
+   Backreference_trTR             -> Backreference_trTR_7            doc comment: set [i\u0130]
+   internal static readonly Regex Instance = new("^(?:i)$", RegexOptions.IgnoreCase | RegexOptions.NonBacktracking);
+   internal static readonly Regex Instance = new("^(?:I)$", RegexOptions.IgnoreCase | RegexOptions.NonBacktracking);
+   internal static readonly Regex Instance = new("^(?:i|j)$", RegexOptions.IgnoreCase | RegexOptions.NonBacktracking);
+   internal static readonly Regex Instance = new("^(((((((((((((((((((((((((((((((((((((((((i)))))))))))))))))))))))))))))))))))))))))$", RegexOptions.IgnoreCase);
+   internal static readonly Regex Instance = new("^i(x)\\1$", RegexOptions.IgnoreCase);
+
+== dotnet run -- en-US
+.NET 10.0.13, CurrentCulture at run time: en-US
+Inputs: I (U+0049), İ (U+0130), i (U+0069), ı (U+0131); T = IsMatch true
+
+1. Same pattern and options, different cultureName (generated code is used)
+   First_enUS                     cultureName en-US             actual TTTF  expected TTTF  ok        generated type First_enUS_0
+   Second_trTR                    cultureName tr-TR             actual TTTF  expected FTTF  MISMATCH  generated type First_enUS_0
+   First_trTR                     cultureName tr-TR             actual TFFT  expected TFFT  ok        generated type First_trTR_1
+   Second_Invariant               cultureName (none: invariant) actual TFFT  expected TFTF  MISMATCH  generated type First_trTR_1
+
+2. RegexOptions.NonBacktracking (limited support: new Regex(...) without the culture)
+   NonBacktracking_trTR           cultureName tr-TR             actual TTTF  expected FTTF  MISMATCH  new Regex(...)
+   NonBacktracking_enUS           cultureName en-US             actual TTTF  expected TTTF  ok        new Regex(...)
+   NonBacktracking_NoCultureName  cultureName (none: invariant) actual TTTF  expected TFTF  MISMATCH  new Regex(...)
+
+3. Tree deeper than 40 (limited support: new Regex(...) without the culture)
+   Deep_trTR                      cultureName tr-TR             actual TTTF  expected FTTF  MISMATCH  new Regex(...)
+   Shallow_trTR                   cultureName tr-TR             actual FTTF  expected FTTF  ok        generated type Shallow_trTR_6
+
+4. Case-insensitive backreference (limited support: new Regex(...) without the culture)
+   Backreference_trTR             cultureName tr-TR             actual TTTF  expected FTTF  MISMATCH  new Regex(...)
+
+== dotnet run -- tr-TR
+.NET 10.0.13, CurrentCulture at run time: tr-TR
+Inputs: I (U+0049), İ (U+0130), i (U+0069), ı (U+0131); T = IsMatch true
+
+1. Same pattern and options, different cultureName (generated code is used)
+   First_enUS                     cultureName en-US             actual TTTF  expected TTTF  ok        generated type First_enUS_0
+   Second_trTR                    cultureName tr-TR             actual TTTF  expected FTTF  MISMATCH  generated type First_enUS_0
+   First_trTR                     cultureName tr-TR             actual TFFT  expected TFFT  ok        generated type First_trTR_1
+   Second_Invariant               cultureName (none: invariant) actual TFFT  expected TFTF  MISMATCH  generated type First_trTR_1
+
+2. RegexOptions.NonBacktracking (limited support: new Regex(...) without the culture)
+   NonBacktracking_trTR           cultureName tr-TR             actual FTTF  expected FTTF  ok        new Regex(...)
+   NonBacktracking_enUS           cultureName en-US             actual TFFT  expected TTTF  MISMATCH  new Regex(...)
+   NonBacktracking_NoCultureName  cultureName (none: invariant) actual FTTF  expected TFTF  MISMATCH  new Regex(...)
+
+3. Tree deeper than 40 (limited support: new Regex(...) without the culture)
+   Deep_trTR                      cultureName tr-TR             actual FTTF  expected FTTF  ok        new Regex(...)
+   Shallow_trTR                   cultureName tr-TR             actual FTTF  expected FTTF  ok        generated type Shallow_trTR_6
+
+4. Case-insensitive backreference (limited support: new Regex(...) without the culture)
+   Backreference_trTR             cultureName tr-TR             actual FTTF  expected FTTF  ok        new Regex(...)

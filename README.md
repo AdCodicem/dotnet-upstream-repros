@@ -1,6 +1,6 @@
 # dotnet-upstream-repros
 
-Minimal reproductions of bugs and API gaps reported to .NET repositories. Each folder is a standalone project that
+Minimal reproductions of bugs and API gaps reported to .NET repositories and to libraries of the .NET ecosystem. Each folder is a standalone project that
 uses only the .NET SDK and the packages it names, with a `repro.sh` that runs it from scratch and the output it
 printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on .NET 11 RC1.
 
@@ -26,6 +26,36 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 | [`meai-response-format-schema-options`](meai-response-format-schema-options) | [dotnet/extensions#7821](https://github.com/dotnet/extensions/issues/7821) | Yes | Not run |
 | [`agent-framework-runasync-schema-options`](agent-framework-runasync-schema-options) | [microsoft/agent-framework#9245](https://github.com/microsoft/agent-framework/issues/9245) | Yes | Not run |
 | [`semantic-kernel-converter-message-swallowed`](semantic-kernel-converter-message-swallowed) | [microsoft/semantic-kernel#14575](https://github.com/microsoft/semantic-kernel/issues/14575) | Yes | Not run |
+| [`extensions-genlogging-type-classification`](extensions-genlogging-type-classification) | dotnet/extensions (to be filed) | Yes | Not run |
+| [`extensions-genlogging-logproperties-expansion`](extensions-genlogging-logproperties-expansion) | dotnet/extensions (to be filed) | Yes | Not run |
+| [`extensions-genlogging-classification-attribute-arguments`](extensions-genlogging-classification-attribute-arguments) | dotnet/extensions (to be filed) | Yes | Not run |
+| [`extensions-genlogging-transitive-stack-overflow`](extensions-genlogging-transitive-stack-overflow) | dotnet/extensions (to be filed) | Yes | Not run |
+| [`aspnetcore-blazor-nullable-parsable`](aspnetcore-blazor-nullable-parsable) | dotnet/aspnetcore (to be filed) | Yes | Yes (`Code?`; `Guid?` is fixed) |
+| [`aspnetcore-jsonpatch-newtonsoft`](aspnetcore-jsonpatch-newtonsoft) | dotnet/aspnetcore (to be filed) | Yes | Yes |
+| [`aspnetcore-rdg-asparameters-nullable-constructor`](aspnetcore-rdg-asparameters-nullable-constructor) | dotnet/aspnetcore (to be filed) | Yes | Yes |
+| [`runtime-regex-generator-culturename`](runtime-regex-generator-culturename) | dotnet/runtime (to be filed) | Yes | Yes |
+| [`runtime-options-validator-display-name`](runtime-options-validator-display-name) | dotnet/runtime (to be filed) | Yes | Yes |
+| [`runtime-stj-schema-converter-value-object`](runtime-stj-schema-converter-value-object) | dotnet/runtime (to be filed) | Yes | Yes |
+| [`efcore-compiled-nullable-comparer`](efcore-compiled-nullable-comparer) | dotnet/efcore (to be filed) | Yes | Yes |
+| [`efcore-cosmos-contains-converted`](efcore-cosmos-contains-converted) | dotnet/efcore (to be filed) | Yes | Yes |
+| [`efcore-interceptor-reader-error`](efcore-interceptor-reader-error) | dotnet/efcore (to be filed) | Yes | Yes |
+| [`functions-worker-aspnetcore-analyzer-ad0001`](functions-worker-aspnetcore-analyzer-ad0001) | Azure/azure-functions-dotnet-worker (to be filed) | Yes | Not run |
+| [`hotchocolate-data-named-filter-convention-field-order`](hotchocolate-data-named-filter-convention-field-order) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
+| [`hotchocolate-native-aot-startup`](hotchocolate-native-aot-startup) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
+| [`hotchocolate-data-hasvalue-istrue-efcore`](hotchocolate-data-hasvalue-istrue-efcore) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
+| [`hotchocolate-data-custom-filter-operation-cost`](hotchocolate-data-custom-filter-operation-cost) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
+| [`swashbuckle-schemafilter-constructor-deadlock`](swashbuckle-schemafilter-constructor-deadlock) | domaindrivendev/Swashbuckle.AspNetCore (to be filed) | Yes | Not run |
+| [`swashbuckle-fromquery-hidden-property-ambiguous`](swashbuckle-fromquery-hidden-property-ambiguous) | domaindrivendev/Swashbuckle.AspNetCore (to be filed) | Yes | Not run |
+| [`protobuf-net-protomodel-scalar-serializer-nullable-map`](protobuf-net-protomodel-scalar-serializer-nullable-map) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
+| [`protobuf-net-protomodel-trim-warnings`](protobuf-net-protomodel-trim-warnings) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
+| [`protobuf-net-scalar-serializer-packed-dataformat`](protobuf-net-scalar-serializer-packed-dataformat) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
+| [`protobuf-net-getschema-surrogate-package-root-level`](protobuf-net-getschema-surrogate-package-root-level) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
+| [`protobuf-net-map-key-scalar-serializer`](protobuf-net-map-key-scalar-serializer) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
+| [`akka-serializer-v2-generic-formatter`](akka-serializer-v2-generic-formatter) | akkadotnet/akka.net (to be filed) | Yes (1.6.0-beta1 to beta3) | Not run |
+| [`nswag-query-model-hidden-property`](nswag-query-model-hidden-property) | RicoSuter/NSwag (to be filed) | Yes | Not run |
+| [`nswag-minimal-api-newtonsoft-settings`](nswag-minimal-api-newtonsoft-settings) | RicoSuter/NSwag (to be filed) | Yes | Not run |
+| [`njsonschema-csharp-date-enum-duplicate-converter`](njsonschema-csharp-date-enum-duplicate-converter) | RicoSuter/NJsonSchema (to be filed) | Yes | Not run |
+| [`njsonschema-validator-integer-beyond-int64`](njsonschema-validator-integer-beyond-int64) | RicoSuter/NJsonSchema (to be filed) | Yes | Not run |
 
 Running a repro needs bash (Git Bash works on Windows) and the .NET SDK of the target framework:
 
@@ -45,3 +75,7 @@ and point `DOTNET_ROOT` at the `dotnet` on `PATH` when it is not set, so an SDK 
 `npgsql-unnest-column-inferred-mapping` and `efcore-primitive-collection-converter-null-element` run without a
 database server. With `REPRO_DOCKER=1` they also start PostgreSQL 17, or SQL Server 2022, in a container they remove,
 for the part that needs one. `efcore-tpc-complex-column-prefix` runs on .NET 11 only.
+
+The `hotchocolate-*` folders also keep the output of the HotChocolate 16.7 preview (`REPRO_HC_VERSION`).
+`hotchocolate-native-aot-startup` and `protobuf-net-protomodel-trim-warnings` publish natively, which needs the
+platform's native toolchain (the C++ build tools on Windows) and, on Windows, a short path.

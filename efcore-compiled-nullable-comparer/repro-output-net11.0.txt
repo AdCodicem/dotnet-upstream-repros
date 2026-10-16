@@ -1,0 +1,36 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+
+== Control, model built at run time: dotnet run
+Model: built at run time
+Order 1: Quantity=3 Backordered=2
+Order 2: Quantity=1 Backordered=null
+Backordered's comparer: NullableValueComparer`1
+
+== dotnet ef dbcontext optimize --output-dir Compiled --namespace Compiled
+Build started...
+Build succeeded.
+Successfully generated a compiled model, it will be discovered automatically, but you can also call 'options.UseModel(Compiled.ShopContextModel.Instance)'. Run this command again when the model is modified.
+<repro>\Compiled\ShopContextAssemblyAttributes.cs
+<repro>\Compiled\ShopContextModel.cs
+<repro>\Compiled\ShopContextModelBuilder.cs
+<repro>\Compiled\OrderEntityType.cs
+
+== What the compiled model writes for Backordered's comparer: grep NullableValueComparer Compiled/*.cs
+Compiled/OrderEntityType.cs:41: valueComparer: new NullableValueComparer<QtyComparer>(new QtyComparer()));
+
+== The compiled model does not build: dotnet build
+<repro>\Compiled\OrderEntityType.cs(41,54): error CS0453: The type 'QtyComparer' must be a non-nullable value type in order to use it as parameter 'T' in the generic type or method 'NullableValueComparer<T>'
+
+== Workaround, a ValueComparer<Qty?> of its own for Qty?: Workaround=true dotnet ef dbcontext optimize, then dotnet run
+Build started...
+Build succeeded.
+Successfully generated a compiled model, it will be discovered automatically, but you can also call 'options.UseModel(Compiled.ShopContextModel.Instance)'. Run this command again when the model is modified.
+<repro>\Compiled\ShopContextAssemblyAttributes.cs
+<repro>\Compiled\ShopContextModel.cs
+<repro>\Compiled\ShopContextModelBuilder.cs
+<repro>\Compiled\OrderEntityType.cs
+Compiled/OrderEntityType.cs:40: valueComparer: new NullableQtyComparer());
+Model: compiled
+Order 1: Quantity=3 Backordered=2
+Order 2: Quantity=1 Backordered=null
+Backordered's comparer: NullableQtyComparer

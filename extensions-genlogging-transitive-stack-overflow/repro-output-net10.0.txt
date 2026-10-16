@@ -1,0 +1,18 @@
+== .NET SDK 10.0.402, net10.0, Microsoft.Extensions.Telemetry.Abstractions 10.11.0, MINGW64_NT-10.0-26200
+
+== declared: a cycle through a property Leaf declares itself (LOGGEN021, as expected)
+<repro>\declared\Library.cs(17,99): error LOGGEN021: Parameter "holder" annotated for properties logging within logging method "Received" has type with a cycle in its hierarchy: Leaf? ⇆ Leaf? (https://aka.ms/dotnet-extensions-warnings/LOGGEN021)
+
+== inherited: the same cycle through a property Leaf inherits from Node (the compiler process crashes)
+Stack overflow.
+   at Microsoft.Gen.Logging.Parsing.Parser.<ProcessLogPropertiesForParameter>g__GetTypePropertiesToLog|17_1(...)    <- 1376 times
+   at Microsoft.Gen.Logging.Parsing.Parser.ProcessLogPropertiesForParameter(...)
+   at Microsoft.Gen.Logging.Parsing.Parser.GetLogTypes(...)
+   at Microsoft.Gen.Logging.LoggingGenerator.HandleAnnotatedTypes(...)
+
+== system-type: a property of type System.Type (the compiler process crashes)
+Stack overflow.
+   at Microsoft.Gen.Logging.Parsing.Parser.<ProcessLogPropertiesForParameter>g__GetTypePropertiesToLog|17_1(...)    <- 1376 times
+   at Microsoft.Gen.Logging.Parsing.Parser.ProcessLogPropertiesForParameter(...)
+   at Microsoft.Gen.Logging.Parsing.Parser.GetLogTypes(...)
+   at Microsoft.Gen.Logging.LoggingGenerator.HandleAnnotatedTypes(...)

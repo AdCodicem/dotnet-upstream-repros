@@ -1,0 +1,14 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+1. The failing row is the first one (raised by ExecuteReader):
+   logged: Microsoft.EntityFrameworkCore.Database.Command.CommandError
+   interceptor: CommandFailed (SqliteException: SQLite Error 1: 'integer overflow'.)
+   logged: Microsoft.EntityFrameworkCore.Query.QueryIterationFailed
+   caught by the caller: SqliteException: SQLite Error 1: 'integer overflow'.
+
+2. The failing row is the second one (raised by DbDataReader.Read):
+   interceptor: ReaderExecuted
+   logged: Microsoft.EntityFrameworkCore.Query.QueryIterationFailed
+   interceptor: DataReaderClosing
+   interceptor: DataReaderDisposing
+   caught by the caller: SqliteException: SQLite Error 1: 'integer overflow'.
+

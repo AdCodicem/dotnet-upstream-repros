@@ -1,0 +1,37 @@
+== .NET SDK 10.0.402, net10.0, HotChocolate 16.6.8, MINGW64_NT-10.0-26200
+
+== dotnet run
+== 1. HotChocolate's own StringOperationFilterInputType
+   input StringOperationFilterInput {
+     eq: String @cost(weight: "10")
+     neq: String @cost(weight: "10")
+     contains: String @cost(weight: "20")
+     ncontains: String @cost(weight: "20")
+     startsWith: String @cost(weight: "20")
+     nstartsWith: String @cost(weight: "20")
+   { books(where: { title: { contains: "a" } }) { title } } -> extensions.operationCost = {"fieldCost":41,"typeCost":2}
+
+== 2. An operation type of the application's own, deriving StringOperationFilterInputType (same handlers)
+   input AppStringOperationFilterInput {
+     eq: String @cost(weight: "10")
+     contains: String @cost(weight: "10")
+     startsWith: String @cost(weight: "10")
+   { books(where: { title: { contains: "a" } }) { title } } -> extensions.operationCost = {"fieldCost":31,"typeCost":2}
+
+== 3. HotChocolate's own, with FilterCostOptions.DefaultExpensiveFilterOperationCost = 50
+   input StringOperationFilterInput {
+     eq: String @cost(weight: "10")
+     neq: String @cost(weight: "10")
+     contains: String @cost(weight: "50")
+     ncontains: String @cost(weight: "50")
+     startsWith: String @cost(weight: "50")
+     nstartsWith: String @cost(weight: "50")
+   { books(where: { title: { contains: "a" } }) { title } } -> extensions.operationCost = {"fieldCost":71,"typeCost":2}
+
+== 4. The workaround, @cost(weight: 20) written by hand, with DefaultExpensiveFilterOperationCost = 50
+   input HandWeighedStringOperationFilterInput {
+     eq: String @cost(weight: "10")
+     contains: String @cost(weight: "20")
+     startsWith: String @cost(weight: "20")
+   { books(where: { title: { contains: "a" } }) { title } } -> extensions.operationCost = {"fieldCost":41,"typeCost":2}
+

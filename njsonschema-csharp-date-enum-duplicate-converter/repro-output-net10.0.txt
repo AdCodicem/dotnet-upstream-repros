@@ -1,0 +1,40 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+== NJsonSchema CSharpGenerator over holiday.schema.json -> client/NJsonSchemaOnly.g.cs
+  public PublicHoliday Day { get; set; }
+      [Newtonsoft.Json.JsonProperty("day", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+      [Newtonsoft.Json.JsonConverter(typeof(DateFormatConverter))]
+  public System.DateTimeOffset PlainDate { get; set; }
+      [Newtonsoft.Json.JsonProperty("plainDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(DateFormatConverter))]
+  public HolidayColor Color { get; set; }
+      [Newtonsoft.Json.JsonProperty("color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+== NSwag CSharpClientGenerator over openapi.json, JsonLibrary = NewtonsoftJson -> client/NSwagNewtonsoftJson.g.cs
+  public PublicHoliday Day { get; set; }
+      [Newtonsoft.Json.JsonProperty("day", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+      [Newtonsoft.Json.JsonConverter(typeof(DateFormatConverter))]
+  public System.DateTimeOffset PlainDate { get; set; }
+      [Newtonsoft.Json.JsonProperty("plainDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(DateFormatConverter))]
+  public HolidayColor Color { get; set; }
+      [Newtonsoft.Json.JsonProperty("color", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+      [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+== NSwag CSharpClientGenerator over openapi.json, JsonLibrary = SystemTextJson -> client/NSwagSystemTextJson.g.cs
+  public PublicHoliday Day { get; set; }
+      [System.Text.Json.Serialization.JsonPropertyName("day")]
+      [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PublicHoliday>))]
+      [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+  public System.DateTimeOffset PlainDate { get; set; }
+      [System.Text.Json.Serialization.JsonPropertyName("plainDate")]
+      [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+  public HolidayColor Color { get; set; }
+      [System.Text.Json.Serialization.JsonPropertyName("color")]
+      [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<HolidayColor>))]
+
+== dotnet build client/Client.csproj (the three generated files)
+<repro>\client\NJsonSchemaOnly.g.cs(32,10): error CS0579: Duplicate 'Newtonsoft.Json.JsonConverter' attribute
+<repro>\client\NSwagNewtonsoftJson.g.cs(307,10): error CS0579: Duplicate 'Newtonsoft.Json.JsonConverter' attribute
+<repro>\client\NSwagSystemTextJson.g.cs(304,10): error CS0579: Duplicate 'System.Text.Json.Serialization.JsonConverter' attribute
+Build failed.

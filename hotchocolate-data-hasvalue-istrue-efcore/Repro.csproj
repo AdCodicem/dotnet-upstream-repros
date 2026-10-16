@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- repro.sh sets REPRO_HC_VERSION and REPRO_EF_VERSION; the defaults are the latest 16.x and 10.0 releases. -->
+    <TargetFramework>net10.0</TargetFramework>
+    <HotChocolateVersion>$(REPRO_HC_VERSION)</HotChocolateVersion>
+    <HotChocolateVersion Condition="'$(HotChocolateVersion)' == ''">16.6.8</HotChocolateVersion>
+    <EfCoreVersion>$(REPRO_EF_VERSION)</EfCoreVersion>
+    <EfCoreVersion Condition="'$(EfCoreVersion)' == ''">10.0.13</EfCoreVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <HotChocolateImplicitUsings>disable</HotChocolateImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.Data" Version="$(HotChocolateVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EfCoreVersion)" />
+  </ItemGroup>
+
+</Project>

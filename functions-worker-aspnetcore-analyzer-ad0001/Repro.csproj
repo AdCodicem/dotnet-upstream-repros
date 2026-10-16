@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- repro.sh sets REPRO_TFM; the default is .NET 10. -->
+    <TargetFramework>$(REPRO_TFM)</TargetFramework>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- repro.sh builds each file of Cases/ on its own: -p:Case=<name>. -->
+    <Case Condition="'$(Case)' == ''">if-else</Case>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cases/**" />
+    <Compile Include="Cases/$(Case).cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.1.0" />
+    <!-- Brings Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore.Analyzers 1.0.4, the analyzer at fault. -->
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>

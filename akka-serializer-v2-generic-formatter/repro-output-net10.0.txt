@@ -1,0 +1,15 @@
+== .NET SDK 10.0.402, net10.0, Akka.Serialization.V2 1.6.0-beta3, MINGW64_NT-10.0-26200
+
+== [AkkaSerializerFormatter<Sku, StringValueFormatter<Sku>>]: dotnet build
+<repro>\obj\Debug\net10.0\generated\Akka.Serialization.V2.Generators\Akka.Serialization.V2.Generators.AkkaSerializerGenerator\ReproSerializer.AkkaSerialization.g.cs(10,36): error CS0305: Using the generic type 'StringValueFormatter<T>' requires 1 type arguments [<repro>\Repro.csproj]
+-- the formatter field and its construction in obj/Debug/net10.0/generated/Akka.Serialization.V2.Generators/Akka.Serialization.V2.Generators.AkkaSerializerGenerator/ReproSerializer.AkkaSerialization.g.cs:
+10:    private readonly global::Repro.StringValueFormatter _akkaFormatter_Repro_Sku;
+14:        _akkaFormatter_Repro_Sku = new global::Repro.StringValueFormatter();
+
+== Workaround, [AkkaSerializerFormatter<Sku, SkuFormatter>] with SkuFormatter : StringValueFormatter<Sku>: dotnet build -p:Workaround=true
+build succeeded
+-- the formatter field and its construction in obj/Debug/net10.0/generated/Akka.Serialization.V2.Generators/Akka.Serialization.V2.Generators.AkkaSerializerGenerator/ReproSerializer.AkkaSerialization.g.cs:
+10:    private readonly global::Repro.SkuFormatter _akkaFormatter_Repro_Sku;
+14:        _akkaFormatter_Repro_Sku = new global::Repro.SkuFormatter();
+Serializer: ReproSerializer (120900), manifest "place-order-v1", 12 bytes
+Round trip: PlaceOrder { Sku = Sku { Value = ABC-123 }, Quantity = 2 } -> equal: True

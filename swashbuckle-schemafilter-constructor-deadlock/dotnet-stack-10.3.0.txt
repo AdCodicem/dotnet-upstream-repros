@@ -1,0 +1,182 @@
+Thread (0x67C0):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.Monitor.Wait(class System.Object,int32)
+  System.Private.CoreLib.il!System.Threading.ManualResetEventSlim.Wait(int32,value class System.Threading.CancellationToken)
+  System.Private.CoreLib.il!System.Threading.Tasks.Task.SpinThenBlockingWait(int32,value class System.Threading.CancellationToken)
+  System.Private.CoreLib.il!System.Threading.Tasks.Task.InternalWaitCore(int32,value class System.Threading.CancellationToken)
+  System.Private.CoreLib.il!System.Threading.Tasks.Task.InternalWait(int32,value class System.Threading.CancellationToken)
+  System.Private.CoreLib.il!System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(class System.Threading.Tasks.Task,value class System.Threading.Tasks.ConfigureAwaitOptions)
+  Repro!Program.<Main>(class System.String[])
+
+Thread (0x212C):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+IOCompletionPoller.Poll()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x62C0):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+IOCompletionPoller.Poll()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x56E0):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.Monitor.Wait(class System.Object,int32)
+  System.Private.CoreLib.il!System.Threading.ManualResetEventSlim.Wait(int32,value class System.Threading.CancellationToken)
+  System.Private.CoreLib.il!System.Threading.ManualResetEventSlim.Wait(value class System.TimeSpan)
+  Microsoft.AspNetCore.Server.Kestrel.Core.il!Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.Heartbeat.TimerLoop()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x5FA8):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.WaitHandle.WaitOneNoCheck(int32,bool,class System.Object,value class WaitHandleWaitSourceMap)
+  System.Private.CoreLib.il!System.Threading.WaitHandle.WaitOne()
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.StackGuard.RunOnEmptyStackCore(class System.Func`2<class System.Object,!!0>,class System.Object)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.StackGuard.RunOnEmptyStack(class System.Func`3<!!0,!!1,!!2>,!!0,!!1)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier)
+  System.Collections.Concurrent.il!System.Collections.Concurrent.ConcurrentDictionary`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,System.__Canon].GetOrAdd(!0,class System.Func`2<!0,!1>)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(value class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier,class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(class System.Type)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities+ConstructorMatcher.CreateInstance(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.Abstractions.il!Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(class System.IServiceProvider,class System.Type,class System.Object[])
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.GetOrCreateFilter(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions+<>c__DisplayClass3_0.<Configure>b__0(class Swashbuckle.AspNetCore.SwaggerGen.FilterDescriptor)
+  System.Private.CoreLib.il!System.Collections.Generic.List`1[System.__Canon].ForEach(class System.Action`1<!0>)
+  Swashbuckle.AspNetCore.SwaggerGen!Swashbuckle.AspNetCore.SwaggerGen.ConfigureSchemaGeneratorOptions.Configure(class Swashbuckle.AspNetCore.SwaggerGen.SchemaGeneratorOptions)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.OptionsFactory`1[System.__Canon].Create(class System.String)
+  Microsoft.Extensions.Options.il!Microsoft.Extensions.Options.UnnamedOptionsManager`1[System.__Canon].get_Value()
+  Swashbuckle.AspNetCore.SwaggerGen!Microsoft.Extensions.DependencyInjection.SwaggerGenServiceCollectionExtensions+<>c.<AddSwaggerGen>b__0_5(class System.IServiceProvider)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+
+Thread (0x3218):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.WaitHandle.WaitOneNoCheck(int32,bool,class System.Object,value class WaitHandleWaitSourceMap)
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+GateThread.GateThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x4C90):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.LowLevelLifoSemaphore.WaitForSignal(int32)
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+WorkerThread.WorkerThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x2388):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.WaitHandle.WaitOneNoCheck(int32,bool,class System.Object,value class WaitHandleWaitSourceMap)
+  System.Private.CoreLib.il!System.Threading.TimerQueue.TimerThread()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x1620):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.WaitHandle.WaitAnyMultiple(value class System.ReadOnlySpan`1<class Microsoft.Win32.SafeHandles.SafeWaitHandle>,int32)
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+WaitThread.WaitThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x46A8):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.Monitor.Enter_Slowpath(class System.Object)
+  System.Private.CoreLib.il!System.Threading.Monitor.Enter(class System.Object,bool&)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,value class Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2[Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].VisitCallSite(class Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite,!0)
+  Microsoft.Extensions.DependencyInjection.il!Microsoft.Extensions.DependencyInjection.ServiceLookup.StackGuard+<>c__3`3[System.__Canon,Microsoft.Extensions.DependencyInjection.ServiceLookup.RuntimeResolverContext,System.__Canon].<RunOnEmptyStack>b__3_0(class System.Object)
+  System.Private.CoreLib.il!System.Threading.Tasks.Task`1[System.__Canon].InnerInvoke()
+  System.Private.CoreLib.il!System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(class System.Threading.Thread,class System.Threading.ExecutionContext,class System.Threading.ContextCallback,class System.Object)
+  System.Private.CoreLib.il!System.Threading.Tasks.Task.ExecuteWithThreadLocal(class System.Threading.Tasks.Task&,class System.Threading.Thread)
+  System.Private.CoreLib.il!System.Threading.ThreadPoolWorkQueue.Dispatch()
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+WorkerThread.WorkerThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x5CC0):
+  [Native Frames]
+  System.Private.CoreLib.il!Interop+Kernel32.GetQueuedCompletionStatus(int,unsigned int32&,unsigned int&,int&,int32)
+  System.Private.CoreLib.il!System.Threading.LowLevelLifoSemaphore.WaitForSignal(int32)
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+WorkerThread.WorkerThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+
+Thread (0x68B0):
+  [Native Frames]
+  System.Private.CoreLib.il!System.Threading.LowLevelLifoSemaphore.WaitForSignal(int32)
+  System.Private.CoreLib.il!System.Threading.PortableThreadPool+WorkerThread.WorkerThreadStart()
+  System.Private.CoreLib.il!System.Threading.Thread.StartCallback()
+

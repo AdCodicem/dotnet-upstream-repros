@@ -1,0 +1,27 @@
+== .NET SDK 10.0.402, net10.0, HotChocolate 16.6.8, EF Core Sqlite 10.0.13, MINGW64_NT-10.0-26200
+
+== dotnet run
+== FilterExpressionBuilder.HasValueAndAlso(o.Quantity, o.Quantity.Value > 5)
+   expression: o => (IsTrue(o.Quantity.HasValue) AndAlso (o.Quantity.Value > 5))
+   in memory:  [3]
+   EF Core:    !! InvalidOperationException: The LINQ expression 'DbSet<Order>()
+               .Where(o => IsTrue(o.Quantity.HasValue) && o.Quantity.Value > 5)' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+
+== FilterExpressionBuilder.HasValue(o.Quantity)
+   expression: o => IsTrue(o.Quantity.HasValue)
+   in memory:  [1, 3]
+   EF Core:    !! InvalidOperationException: The LINQ expression 'DbSet<Order>()
+               .Where(o => IsTrue(o.Quantity.HasValue) )' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+
+== FilterExpressionBuilder.NotNullAndAlso(o.Quantity, o.Quantity.Value > 5)
+   expression: o => ((o.Quantity != null) AndAlso (o.Quantity.Value > 5))
+   in memory:  [3]
+   EF Core:    [3]
+   SQL:        WHERE "o"."Quantity" IS NOT NULL AND "o"."Quantity" > 5
+
+== Expression.AndAlso(o.Quantity.HasValue, o.Quantity.Value > 5), no IsTrue
+   expression: o => (o.Quantity.HasValue AndAlso (o.Quantity.Value > 5))
+   in memory:  [3]
+   EF Core:    [3]
+   SQL:        WHERE "o"."Quantity" IS NOT NULL AND "o"."Quantity" > 5
+

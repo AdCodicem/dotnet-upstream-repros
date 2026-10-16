@@ -1,0 +1,35 @@
+== .NET SDK 10.0.402, net10.0, Microsoft.Extensions.Telemetry.Abstractions 10.11.0, MINGW64_NT-10.0-26200
+
+== where the generated code puts each tag
+   OrderPlaced:
+     TagArray[0] = new("order.Id", order?.Id);
+     ClassifiedTagArray[0] = new("order.Card", order?.Card, new global::Microsoft.Extensions.Compliance.Classification.DataClassificationSet(_PersonalDataAttribute));
+   OrderPlacedTransitive:
+     TagArray[2] = new("order.Id", order?.Id);
+     TagArray[1] = new("order.Card.Number", order?.Card?.Number);
+     TagArray[0] = new("order.Card.Expiry", order?.Card?.Expiry);
+   Receipted:
+     TagArray[1] = new("receipt.Card.Number", receipt?.Card?.Number);
+     TagArray[0] = new("receipt.Card.Expiry", receipt?.Card?.Expiry);
+   SignedIn:
+     TagArray[0] = new("account.Name", account?.Name);
+   SignedInTransitive:
+     TagArray[1] = new("account.Name", account?.Name);
+     TagArray[0] = new("account.Password", account?.Password);
+   Shipped:
+     TagArray[1] = new("shipment.Address.City", shipment?.Address?.City);
+     TagArray[0] = new("shipment.Address.Geo", shipment?.Address?.Geo);
+
+== what reaches the logger provider, a redactor configured for every classification
+A. [PersonalData] property, [LogProperties] (redacted, as expected):
+   "order.Card":"<redacted>", "order.Id":"42"
+B. Same property, [LogProperties(Transitive = true)] (expected order.Card.* redacted):
+   "order.Card.Expiry":"12/29", "order.Card.Number":"4111 1111 1111 1111", "order.Id":"42"
+C. [PersonalData] and [LogProperties] on the same property (expected receipt.Card.* redacted, or LOGGEN017 as on a parameter):
+   "receipt.Card.Expiry":"12/29", "receipt.Card.Number":"4111 1111 1111 1111"
+D. [LogPropertyIgnore] on a property, [LogProperties] (left out, as expected):
+   "account.Name":"jane"
+E. Same property, [LogProperties(Transitive = true)] (expected no account.Password):
+   "account.Password":"hunter2", "account.Name":"jane"
+F. [LogProperties(Transitive = true)] on a property, [LogProperties] on the parameter (expected shipment.Address.Geo.Latitude and .Longitude):
+   "shipment.Address.Geo":"Geo.ToString()", "shipment.Address.City":"Paris"

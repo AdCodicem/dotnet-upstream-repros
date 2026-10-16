@@ -1,0 +1,38 @@
+== .NET SDK 10.0.402, net10.0, win-x64, HotChocolate 16.6.8, MINGW64_NT-10.0-26200
+
+== Under the JIT: dotnet run -c Release
+== JIT
+{   "data": {     "hello": "world"   } }
+
+== Native AOT: dotnet publish -c Release -r win-x64 (trimming and AOT warnings, counted by code and assembly)
+      1 warning IL2055 HotChocolate.Types
+      1 warning IL2060 HotChocolate.Types
+      1 warning IL2067 GreenDonut.DependencyInjection
+      3 warning IL2070 HotChocolate.Types
+      3 warning IL2072 HotChocolate.Types
+     12 warning IL2075 HotChocolate.Types
+      2 warning IL3000 HotChocolate.Types
+      1 warning IL3002 HotChocolate.Types
+      5 warning IL3050 HotChocolate.Types
+== native AOT binary
+!! System.InvalidOperationException: A suitable constructor for type 'HotChocolate.Fetching.DataLoaderRootFieldTypeInterceptor' could not be located. Ensure the type is concrete and all parameters of a public constructor are either registered as services or passed as arguments. Also ensure no extraneous arguments are provided.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type, Type[], ActivatorUtilities.ConstructorInfoEx[], ConstructorInfo&, Nullable`1[]&) + 0xac
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(IServiceProvider, Type, Object[]) + 0x3c2
+   at HotChocolate.SchemaBuilder.Setup.Create(SchemaBuilder, SchemaBuilder.LazySchema, IDescriptorContext) + 0x32b
+   at HotChocolate.Execution.RequestExecutorManager.<CreateSchemaAsync>d__22.MoveNext() + 0x60d
+--- End of stack trace from previous location ---
+   at HotChocolate.Execution.RequestExecutorManager.<CreateSchemaServicesAsync>d__20.MoveNext() + 0xcd2
+--- End of stack trace from previous location ---
+   at HotChocolate.Execution.RequestExecutorManager.<CreateRequestExecutorAsync>d__17.MoveNext() + 0x2a0
+--- End of stack trace from previous location ---
+   at HotChocolate.Execution.RequestExecutorManager.<CreateRequestExecutorAsync>d__17.MoveNext() + 0x741
+--- End of stack trace from previous location ---
+   at HotChocolate.Execution.RequestExecutorManager.<GetExecutorAsync>d__13.MoveNext() + 0x1b3
+--- End of stack trace from previous location ---
+   at Program.<<Main>$>d__0.MoveNext() + 0x25a
+exit code 1
+
+== Native AOT, HotChocolate.Types rooted: dotnet publish -c Release -r win-x64 -p:ReproRoot=true
+== native AOT binary
+{   "data": {     "hello": "world"   } }
+exit code 0

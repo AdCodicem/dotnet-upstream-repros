@@ -1,0 +1,70 @@
+== .NET SDK 11.0.100-rc.1.26425.128, net11.0, EF Core 11.0.0-rc.1.26425.128, MINGW64_NT-10.0-26200
+1. string property, no converter: Contains:
+-- @plains='["FR76","DE89"]'
+SELECT VALUE c
+FROM root c
+WHERE ARRAY_CONTAINS(@plains, c["Plain"])
+
+2. Iban property, ValueConverter<Iban, string>: Contains:
+System.InvalidOperationException: Couldn't find array type mapping when applying item/array mappings
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.SqlExpressionFactory.ApplyTypeMappingsOnItemAndArray(SqlExpression itemExpression, SqlExpression arrayExpression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TranslateContains(ShapedQueryExpression source, Expression item)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.Translate(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.Translate(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TranslateSubquery(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosSqlTranslatingExpressionVisitor.<VisitMethodCall>g__TranslateAsSubquery|30_0(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosSqlTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosSqlTranslatingExpressionVisitor.TranslateInternal(Expression expression, Boolean applyDefaultTypeMapping, Boolean isProjection)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosSqlTranslatingExpressionVisitor.Translate(Expression expression, Boolean applyDefaultTypeMapping)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TranslateExpression(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TranslateLambdaExpression(ShapedQueryExpression shapedQueryExpression, LambdaExpression lambdaExpression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TryApplyPredicate(ShapedQueryExpression source, LambdaExpression predicate)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.TranslateWhere(ShapedQueryExpression source, LambdaExpression predicate)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.Translate(Expression expression)
+   at Microsoft.EntityFrameworkCore.Cosmos.Query.Internal.CosmosQueryableMethodTranslatingExpressionVisitor.Translate(Expression expression)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutorExpression[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass11_0`1.<ExecuteCore>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.Execute[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.Execute[TResult](Expression expression)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToQueryString(IQueryable source)
+   at Program.<<Main>$>g__Show|0_7(String label, IQueryable`1 query) in <repro>\Program.cs:line 28
+
+3. Iban property, ValueConverter<Iban, string>: ==:
+-- @p='FR76'
+SELECT VALUE c
+FROM root c
+WHERE (c["Iban"] = @p)
+
+4. enum property, HasConversion<string>(): Contains:
+-- @statuses='[0,1]'
+SELECT VALUE c
+FROM root c
+WHERE ARRAY_CONTAINS(@statuses, c["Status"])
+
+5. enum property, HasConversion<string>(): ==:
+-- @p='Open'
+SELECT VALUE c
+FROM root c
+WHERE (c["Status"] = @p)
+
+6. string property, ValueConverter<string, string> (upper-cases): Contains:
+-- @currencies='["eur","usd"]'
+SELECT VALUE c
+FROM root c
+WHERE ARRAY_CONTAINS(@currencies, c["Currency"])
+
+7. string property, ValueConverter<string, string> (upper-cases): ==:
+-- @p='EUR'
+SELECT VALUE c
+FROM root c
+WHERE (c["Currency"] = @p)
+

@@ -1,0 +1,13 @@
+== .NET SDK 10.0.402, net10.0, Microsoft.Extensions.Telemetry.Abstractions 10.11.0, MINGW64_NT-10.0-26200
+
+== required-argument: [Sensitive("Health")] on a parameter, SensitiveAttribute(string level) (the build is expected to fail)
+<repro>\required-argument\obj\Release\net10.0\generated\Microsoft.Gen.Logging\Microsoft.Gen.Logging.LoggingGenerator\Logging.g.cs(7,129): error CS7036: There is no argument given that corresponds to the required parameter 'level' of 'SensitiveAttribute.SensitiveAttribute(string)'
+
+== the line generated for it
+   private static readonly global::Microsoft.Extensions.Compliance.Classification.DataClassification _SensitiveAttribute = new global::SensitiveAttribute().Classification;
+
+== optional-argument: [Sensitive("Health")] on a parameter, SensitiveAttribute(string level = "Public")
+   private static readonly global::Microsoft.Extensions.Compliance.Classification.DataClassification _SensitiveAttribute = new global::SensitiveAttribute().Classification;
+
+== optional-argument: what reaches the logger provider, Health redacted as <redacted>, anything else as <fallback>
+   "diagnosis":"<fallback>"

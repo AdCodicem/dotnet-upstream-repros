@@ -1,0 +1,42 @@
+@page "/"
+
+<EditForm Model="Model" FormName="repro" OnSubmit="Submit">
+    <input name="Model.Code" value="@Model!.Code" />
+    <input name="Model.Number" value="@Model!.Number" />
+    <input name="Model.Id" value="@Model!.Id" />
+    <input name="Model.Tag" value="@Model!.Tag?.Value" />
+</EditForm>
+<pre id="result">@result</pre>
+
+@code {
+    [SupplyParameterFromForm]
+    public ReproModel? Model { get; set; }
+
+    private string result = "";
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit(EditContext context)
+    {
+        // Validate() is what copies the form mapping errors into the EditContext, as OnValidSubmit would.
+        var valid = context.Validate();
+        result = $"""
+            Code   (Code?) = {Show(Model!.Code)}
+            Number (int?)  = {Show(Model.Number)}
+            Id     (Guid?) = {Show(Model.Id)}
+            Tag    (Tag?)  = {Show(Model.Tag)}
+            valid: {valid}
+            mapping errors: {string.Join(" | ", context.GetValidationMessages().DefaultIfEmpty("none"))}
+            """;
+    }
+
+    private static string Show<T>(T? value) where T : struct => value is { } v ? v.ToString()! : "null";
+
+    public sealed class ReproModel
+    {
+        public Code? Code { get; set; }
+        public int? Number { get; set; }
+        public Guid? Id { get; set; }
+        public Tag? Tag { get; set; }
+    }
+}

@@ -1,0 +1,44 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== dotnet build, PublishAot=true (Roslyn trim and AOT analyzers), Quantity without other members
+  IL warnings: 0
+
+== dotnet build, PublishAot=true, Quantity with a [RequiresUnreferencedCode] helper and a nested TypeConverter
+  66 warning IL2026
+  18 warning IL2111
+  e.g. AppModel.ProtoModel.g.cs(23,18): warning IL2026: Using member 'Quantity.FromJson(String)' which has 'RequiresUnreferencedCodeAttribute' can break functionality when trimming application code. Reflection-based JSON.
+  e.g. AppModel.ProtoModel.g.cs(23,18): warning IL2111: Method 'System.ComponentModel.MemberDescriptor.FindMethod(Type, String, Type[], Type)' with parameters or return value with `DynamicallyAccessedMembersAttribute` is accessed via reflection. Trimmer can't guarantee availability of the requirements of the method.
+  generated line 23: (global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>().Features
+  generated line 44: tmp1 = global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>().Read(ref state, tmp1);
+  generated line 51: tmp2 = global::ProtoBuf.Serializers.RepeatedSerializer.CreateList<global::Quantity>().ReadRepeated(ref state, global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp2, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 67: state.WriteAny<global::Quantity>(1, tmp1, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 71: global::ProtoBuf.Serializers.RepeatedSerializer.CreateList<global::Quantity>().WriteRepeated(ref state, 2, global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp2, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 76: => global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>();
+
+== dotnet publish -r win-x64 (ILC), Quantity without other members
+  1 warning IL2104
+  1 warning IL3053
+
+== dotnet publish -r win-x64 (ILC), Quantity with the two members
+  121 warning IL2026
+  1 warning IL2104
+  38 warning IL2111
+  5 warning IL3050
+  1 warning IL3053
+  e.g. AppModel.ProtoModel.g.cs(67): AOT analysis warning IL3050: AppModel.ProtoBufGeneratedServices.global::ProtoBuf.Serializers.ISerializer<Order>.Write(ProtoWriter.State&,Order): Using member 'Quantity.FromJson(String)' which has 'RequiresDynamicCodeAttribute' can break functionality when AOT compiling. Reflection-based JSON.
+  e.g. AppModel.ProtoModel.g.cs(67): Trim analysis warning IL2026: AppModel.ProtoBufGeneratedServices.global::ProtoBuf.Serializers.ISerializer<Order>.Write(ProtoWriter.State&,Order): Using member 'Quantity.FromJson(String)' which has 'RequiresUnreferencedCodeAttribute' can break functionality when trimming application code. Reflection-based JSON.
+  e.g. AppModel.ProtoModel.g.cs(67): Trim analysis warning IL2111: AppModel.ProtoBufGeneratedServices.global::ProtoBuf.Serializers.ISerializer<Order>.Write(ProtoWriter.State&,Order): Method 'System.ComponentModel.MemberDescriptor.FindMethod(Type,String,Type[],Type)' with parameters or return value with `DynamicallyAccessedMembersAttribute` is accessed via reflection. Trimmer can't guarantee availability of the requirements of the method.
+  generated line 23: (global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>().Features
+  generated line 44: tmp1 = global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>().Read(ref state, tmp1);
+  generated line 51: tmp2 = global::ProtoBuf.Serializers.RepeatedSerializer.CreateList<global::Quantity>().ReadRepeated(ref state, global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp2, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 67: state.WriteAny<global::Quantity>(1, tmp1, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 71: global::ProtoBuf.Serializers.RepeatedSerializer.CreateList<global::Quantity>().WriteRepeated(ref state, 2, global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp2, global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+  generated line 76: => global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>();
+
+== the native binary
+dynamic code: False, written: 080310011002
+read back: Single = 3, Many = 1,2
+
+== the same build's IL, on the JIT
+dynamic code: False, written: 080310011002
+read back: Single = 3, Many = 1,2

@@ -1,0 +1,30 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+== 1. A list of a CategoryScalar | WireTypeVarint type is never packed
+written: 0801080208031001100210031A03010203200120022003
+  field 3, List<int>, IsPacked = true:      1A03010203 (packed)
+  field 4, List<Quantity>, IsPacked = true: 200120022003 (not packed)
+
+== 2. ...and packed data for it cannot be read
+peer bytes for field 1: 0A03010203, read as List<int>: 1,2,3
+peer bytes for field 2: 1203010203, read as List<Quantity>: ProtoException: Invalid wire-type (String); this usually means you have over-written a file without truncating or setting the length; see https://stackoverflow.com/q/2152978/23354
+
+== 3. The proto3 export marks the List<int> [packed = false], not the List<Quantity>
+syntax = "proto3";
+
+message Basket {
+   repeated int32 Ints = 1 [packed = false];
+   repeated int32 Quantities = 2;
+   repeated int32 PackedInts = 3;
+   repeated int32 PackedQuantities = 4;
+}
+
+== 4. A member's DataFormat never reaches a CategoryScalar serializer
+written, Plain = -3 and Custom = -3, both DataFormat.ZigZag: 080510FDFFFFFFFFFFFFFFFF01
+peer bytes for sint32 -3, -3: 08051005, read back: Plain = -3, Custom = 5
+syntax = "proto3";
+
+message Delta {
+   sint32 Plain = 1;
+   int32 Custom = 2;
+}
+

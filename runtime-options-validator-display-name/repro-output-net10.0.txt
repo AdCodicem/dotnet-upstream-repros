@@ -1,0 +1,46 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== Microsoft.Extensions.Options 10.0.13
+Microsoft.Extensions.Options 10.0.13 (its [OptionsValidator] generator), runtime 10.0.13
+-- [OptionsValidator], options name "":
+   Host: The ServerOptions.Host field is required.
+   Port: The field ServerOptions.Port must be between 1 and 65535.
+   CertificatePath: The ServerOptions.Tls.CertificatePath field is required.
+-- [OptionsValidator], options name "Backup":
+   Host: The Backup.Host field is required.
+   Port: The field Backup.Port must be between 1 and 65535.
+   CertificatePath: The Backup.Tls.CertificatePath field is required.
+-- ValidateDataAnnotations() (reflection), either name:
+   DataAnnotation validation failed for 'ServerOptions' members: 'Host' with the error: 'The Host field is required.'.
+   DataAnnotation validation failed for 'ServerOptions' members: 'Port' with the error: 'The field Port must be between 1 and 65535.'.
+   DataAnnotation validation failed for 'ServerOptions.Tls' members: 'CertificatePath' with the error: 'The CertificatePath field is required.'.
+
+== Microsoft.Extensions.Options 11.0.0-rc.1.26425.128
+Microsoft.Extensions.Options 11.0.0-rc.1.26425.128 (its [OptionsValidator] generator), runtime 10.0.13
+-- [OptionsValidator], options name "":
+   Host: The Host field is required.
+   Port: The field Port must be between 1 and 65535.
+   CertificatePath: The Tls.CertificatePath field is required.
+-- [OptionsValidator], options name "Backup":
+   Host: The Backup.Host field is required.
+   Port: The field Backup.Port must be between 1 and 65535.
+   CertificatePath: The Backup.Tls.CertificatePath field is required.
+-- ValidateDataAnnotations() (reflection), either name:
+   DataAnnotation validation failed for 'ServerOptions' members: 'Host' with the error: 'The Host field is required.'.
+   DataAnnotation validation failed for 'ServerOptions' members: 'Port' with the error: 'The field Port must be between 1 and 65535.'.
+   DataAnnotation validation failed for 'ServerOptions.Tls' members: 'CertificatePath' with the error: 'The CertificatePath field is required.'.
+
+== Microsoft.Extensions.Options 11.0.0-rc.2.26504.105
+Microsoft.Extensions.Options 11.0.0-rc.2.26504.105 (its [OptionsValidator] generator), runtime 10.0.13
+-- [OptionsValidator], options name "":
+   Host: The Host field is required.
+   Port: The field Port must be between 1 and 65535.
+   CertificatePath: The Tls.CertificatePath field is required.
+-- [OptionsValidator], options name "Backup":
+   Host: The Backup.Host field is required.
+   Port: The field Backup.Port must be between 1 and 65535.
+   CertificatePath: The Backup.Tls.CertificatePath field is required.
+-- ValidateDataAnnotations() (reflection), either name:
+   DataAnnotation validation failed for 'ServerOptions' members: 'Host' with the error: 'The Host field is required.'.
+   DataAnnotation validation failed for 'ServerOptions' members: 'Port' with the error: 'The field Port must be between 1 and 65535.'.
+   DataAnnotation validation failed for 'ServerOptions.Tls' members: 'CertificatePath' with the error: 'The CertificatePath field is required.'.

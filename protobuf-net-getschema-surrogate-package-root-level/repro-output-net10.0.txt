@@ -1,0 +1,51 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+== 1. A dictionary keyed by a type with a surrogate to a primitive
+serializes: 0A0508FA011003, round trip: [Cents { Value = 250 }, 3]
+a member, a list and a dictionary value of it export:
+syntax = "proto3";
+package Shop;
+
+message PricedAs {
+   int64 Single = 1;
+   repeated int64 Many = 2;
+   map<string,int64> ByName = 3;
+}
+
+a dictionary key of it:
+GetSchema: System.InvalidOperationException: Failed to compare two elements in the array.
+ ---> System.ArgumentException: Data of this type has inbuilt behaviour, and cannot be added to a model in this way: System.Int64
+  at ProtoBuf.Meta.RuntimeTypeModel.FindOrAddAuto(Type type, Boolean demand, Boolean addWithContractOnly, Boolean addEvenIfAutoDisabled, CompatibilityLevel ambient)
+  at ProtoBuf.Meta.RuntimeTypeModel.get_Item(Type type)
+  at ProtoBuf.Meta.MetaType.GetSchemaTypeName(HashSet`1 callstack)
+  at ProtoBuf.Meta.MetaType.GetSchemaTypeName(HashSet`1 callstack)
+  at ProtoBuf.Meta.MetaType.Comparer.Compare(MetaType x, MetaType y)
+
+== 2. The package guess counts a type served by a custom serializer, which the file never declares
+syntax = "proto3";
+
+message Line {
+   string Product = 1;
+   int32 Quantity = 2;
+}
+
+syntax = "proto3";
+package Shop;
+
+message PlainLine {
+   string Product = 1;
+   int32 Quantity = 2;
+}
+
+== 3. A root Guid on a Level300 model: the export and the bytes disagree
+syntax = "proto3";
+
+message Guid {
+   string value = 1;
+}
+
+root Guid written:              0A12093322110055447766118899AABBCCDDEEFF (field 1 holds a .bcl.Guid, Level200)
+Holder { Guid Id = 1 } written: 0A2430303131323233332D343435352D363637372D383839392D616162626363646465656666 (field 1 holds a string, Level300)
+root Guid read from the exported shape: ProtoException: Invalid wire-type (7)
+root DateTime: exported at Level300 as `.google.protobuf.Timestamp value = 1;`; written at Level200 0A0808CAD6B9950D1003, at Level300 0A0808CAD6B9950D1003
+root TimeSpan: exported at Level300 as `.google.protobuf.Duration value = 1;`; written at Level200 0A0508B4011002, at Level300 0A0508B4011002
+root decimal: exported at Level300 as `string value = 1;`; written at Level200 0A04080F1802, at Level300 0A04080F1802

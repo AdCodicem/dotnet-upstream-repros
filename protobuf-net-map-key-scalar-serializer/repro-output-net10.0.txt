@@ -1,0 +1,45 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+== 1. The same bytes, a map for a string key, a list of entries for a Sku key
+Dictionary<string, int>: 0A050A01611001
+Dictionary<Sku, int>:    0A050A01611001
+syntax = "proto3";
+
+message ByString {
+   map<string,int32> Stock = 1;
+}
+
+syntax = "proto3";
+
+message BySku {
+   repeated KeyValuePair_string_Int32 Stock = 1;
+}
+message KeyValuePair_string_Int32 {
+   string Key = 1;
+   int32 Value = 2;
+}
+
+== 2. A key sent twice: the last wins for the map, the entry list throws
+Dictionary<string, int>: 9
+Dictionary<Sku, int>:    ArgumentException: An item with the same key has already been added. Key: Sku { Value = a }
+
+== 3. Two such dictionaries over two key types named alike export one entry message name twice
+syntax = "proto3";
+
+message Catalogue {
+   repeated KeyValuePair_string_Int32 BySku = 1;
+   repeated KeyValuePair_string_Int32 ByEan = 2;
+}
+message KeyValuePair_string_Int32 {
+   string Key = 1;
+   int32 Value = 2;
+}
+message KeyValuePair_string_Int32 {
+   string Key = 1;
+   int32 Value = 2;
+}
+
+
+== libprotoc 35.1 on the Catalogue export
+obj/proto/catalogue.proto:12:11: "Key" is already defined in "KeyValuePair_string_Int32".
+obj/proto/catalogue.proto:13:10: "Value" is already defined in "KeyValuePair_string_Int32".
+obj/proto/catalogue.proto:11:9: "KeyValuePair_string_Int32" is already defined.

@@ -1,0 +1,29 @@
+== .NET SDK 10.0.402, net10.0, MINGW64_NT-10.0-26200
+
+== Quantity and List<Quantity> only: both models agree
+runtime model:   080310011002
+generated model: 080310011002
+  PBN diagnostics: none
+
+== plus a Quantity? member
+<repro>\obj\Release\net10.0\generated\protobuf-net.BuildTools\ProtoBuf.BuildTools.Generators.ProtoModelGenerator\AppModel.ProtoModel.g.cs(58,145): error CS1503: Argument 2: cannot convert from 'Quantity?' to 'Quantity'
+  generated line 58: tmp3 = global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>().Read(ref state, tmp3);
+  PBN diagnostics: none
+  the write the generator emits for it (it compiles):
+    if (tmp3.HasValue)
+    {
+    state.WriteMessage<global::Quantity>(3, global::ProtoBuf.Serializers.SerializerFeatures.CategoryRepeated, tmp3.GetValueOrDefault(), global::ProtoBuf.Serializers.SerializerCache.Get<global::QuantitySerializer, global::Quantity>());
+
+== plus a Dictionary<string, Quantity> member
+<repro>\obj\Release\net10.0\generated\protobuf-net.BuildTools\ProtoBuf.BuildTools.Generators.ProtoModelGenerator\AppModel.ProtoModel.g.cs(58,414): error CS1503: Argument 7: cannot convert from 'AppModel.ProtoBufGeneratedServices' to 'ProtoBuf.Serializers.ISerializer<Quantity>'
+<repro>\obj\Release\net10.0\generated\protobuf-net.BuildTools\ProtoBuf.BuildTools.Generators.ProtoModelGenerator\AppModel.ProtoModel.g.cs(83,403): error CS1503: Argument 8: cannot convert from 'AppModel.ProtoBufGeneratedServices' to 'ProtoBuf.Serializers.ISerializer<Quantity>'
+  generated line 58: tmp4 = global::ProtoBuf.Serializers.MapSerializer.CreateDictionary<string, global::Quantity>().ReadMap(ref state, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString | global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp4, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, null, this);
+  generated line 83: global::ProtoBuf.Serializers.MapSerializer.CreateDictionary<string, global::Quantity>().WriteMap(ref state, 4, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString | global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled, tmp4, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, null, this);
+  PBN diagnostics: none
+
+== plus a Dictionary<Quantity, string> member
+<repro>\obj\Release\net10.0\generated\protobuf-net.BuildTools\ProtoBuf.BuildTools.Generators.ProtoModelGenerator\AppModel.ProtoModel.g.cs(58,483): error CS1503: Argument 6: cannot convert from 'AppModel.ProtoBufGeneratedServices' to 'ProtoBuf.Serializers.ISerializer<Quantity>'
+<repro>\obj\Release\net10.0\generated\protobuf-net.BuildTools\ProtoBuf.BuildTools.Generators.ProtoModelGenerator\AppModel.ProtoModel.g.cs(83,472): error CS1503: Argument 7: cannot convert from 'AppModel.ProtoBufGeneratedServices' to 'ProtoBuf.Serializers.ISerializer<Quantity>'
+  generated line 58: tmp5 = global::ProtoBuf.Serializers.MapSerializer.CreateDictionary<global::Quantity, string>().ReadMap(ref state, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString | global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled | global::ProtoBuf.Serializers.SerializerFeatures.OptionFailOnDuplicateKey, tmp5, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, this);
+  generated line 83: global::ProtoBuf.Serializers.MapSerializer.CreateDictionary<global::Quantity, string>().WriteMap(ref state, 5, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString | global::ProtoBuf.Serializers.SerializerFeatures.OptionPackedDisabled | global::ProtoBuf.Serializers.SerializerFeatures.OptionFailOnDuplicateKey, tmp5, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, global::ProtoBuf.Serializers.SerializerFeatures.WireTypeString, this);
+  PBN diagnostics: none
