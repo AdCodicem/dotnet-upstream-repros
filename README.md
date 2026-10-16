@@ -1,8 +1,9 @@
 # dotnet-upstream-repros
 
-Minimal reproductions of bugs and API gaps reported to .NET repositories and to libraries of the .NET ecosystem. Each folder is a standalone project that
-uses only the .NET SDK and the packages it names, with a `repro.sh` that runs it from scratch and the output it
-printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on .NET 11 RC1.
+Minimal reproductions of bugs and API gaps reported to .NET repositories and to libraries of the .NET ecosystem.
+Each folder is a standalone project that uses only the .NET SDK and the packages it names, with a `repro.sh` that runs
+it from scratch and the output it printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on
+.NET 11 RC1.
 
 | Folder | Reported in | Reproduced on 10.0 | On 11.0.0-rc.1 |
 |--------|-------------|--------------------|----------------|
@@ -26,36 +27,36 @@ printed (`repro-output-<tfm>.txt`), on .NET 10 and, where the table says so, on 
 | [`meai-response-format-schema-options`](meai-response-format-schema-options) | [dotnet/extensions#7821](https://github.com/dotnet/extensions/issues/7821) | Yes | Not run |
 | [`agent-framework-runasync-schema-options`](agent-framework-runasync-schema-options) | [microsoft/agent-framework#9245](https://github.com/microsoft/agent-framework/issues/9245) | Yes | Not run |
 | [`semantic-kernel-converter-message-swallowed`](semantic-kernel-converter-message-swallowed) | [microsoft/semantic-kernel#14575](https://github.com/microsoft/semantic-kernel/issues/14575) | Yes | Not run |
-| [`extensions-genlogging-type-classification`](extensions-genlogging-type-classification) | dotnet/extensions (to be filed) | Yes | Not run |
-| [`extensions-genlogging-logproperties-expansion`](extensions-genlogging-logproperties-expansion) | dotnet/extensions (to be filed) | Yes | Not run |
-| [`extensions-genlogging-classification-attribute-arguments`](extensions-genlogging-classification-attribute-arguments) | dotnet/extensions (to be filed) | Yes | Not run |
-| [`extensions-genlogging-transitive-stack-overflow`](extensions-genlogging-transitive-stack-overflow) | dotnet/extensions (to be filed) | Yes | Not run |
-| [`aspnetcore-blazor-nullable-parsable`](aspnetcore-blazor-nullable-parsable) | dotnet/aspnetcore (to be filed) | Yes | Yes (`Code?`; `Guid?` is fixed) |
-| [`aspnetcore-jsonpatch-newtonsoft`](aspnetcore-jsonpatch-newtonsoft) | dotnet/aspnetcore (to be filed) | Yes | Yes |
-| [`aspnetcore-rdg-asparameters-nullable-constructor`](aspnetcore-rdg-asparameters-nullable-constructor) | dotnet/aspnetcore (to be filed) | Yes | Yes |
-| [`runtime-regex-generator-culturename`](runtime-regex-generator-culturename) | dotnet/runtime (to be filed) | Yes | Yes |
-| [`runtime-options-validator-display-name`](runtime-options-validator-display-name) | dotnet/runtime (to be filed) | Yes | Yes |
-| [`runtime-stj-schema-converter-value-object`](runtime-stj-schema-converter-value-object) | dotnet/runtime (to be filed) | Yes | Yes |
-| [`efcore-compiled-nullable-comparer`](efcore-compiled-nullable-comparer) | dotnet/efcore (to be filed) | Yes | Yes |
-| [`efcore-cosmos-contains-converted`](efcore-cosmos-contains-converted) | dotnet/efcore (to be filed) | Yes | Yes |
-| [`efcore-interceptor-reader-error`](efcore-interceptor-reader-error) | dotnet/efcore (to be filed) | Yes | Yes |
-| [`functions-worker-aspnetcore-analyzer-ad0001`](functions-worker-aspnetcore-analyzer-ad0001) | Azure/azure-functions-dotnet-worker (to be filed) | Yes | Not run |
-| [`hotchocolate-data-named-filter-convention-field-order`](hotchocolate-data-named-filter-convention-field-order) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
-| [`hotchocolate-native-aot-startup`](hotchocolate-native-aot-startup) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
-| [`hotchocolate-data-hasvalue-istrue-efcore`](hotchocolate-data-hasvalue-istrue-efcore) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
-| [`hotchocolate-data-custom-filter-operation-cost`](hotchocolate-data-custom-filter-operation-cost) | ChilliCream/graphql-platform (to be filed) | Yes | Not run |
-| [`swashbuckle-schemafilter-constructor-deadlock`](swashbuckle-schemafilter-constructor-deadlock) | domaindrivendev/Swashbuckle.AspNetCore (to be filed) | Yes | Not run |
-| [`swashbuckle-fromquery-hidden-property-ambiguous`](swashbuckle-fromquery-hidden-property-ambiguous) | domaindrivendev/Swashbuckle.AspNetCore (to be filed) | Yes | Not run |
-| [`protobuf-net-protomodel-scalar-serializer-nullable-map`](protobuf-net-protomodel-scalar-serializer-nullable-map) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
-| [`protobuf-net-protomodel-trim-warnings`](protobuf-net-protomodel-trim-warnings) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
-| [`protobuf-net-scalar-serializer-packed-dataformat`](protobuf-net-scalar-serializer-packed-dataformat) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
-| [`protobuf-net-getschema-surrogate-package-root-level`](protobuf-net-getschema-surrogate-package-root-level) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
-| [`protobuf-net-map-key-scalar-serializer`](protobuf-net-map-key-scalar-serializer) | protobuf-net/protobuf-net (to be filed) | Yes | Not run |
-| [`akka-serializer-v2-generic-formatter`](akka-serializer-v2-generic-formatter) | akkadotnet/akka.net (to be filed) | Yes (1.6.0-beta1 to beta3) | Not run |
-| [`nswag-query-model-hidden-property`](nswag-query-model-hidden-property) | RicoSuter/NSwag (to be filed) | Yes | Not run |
-| [`nswag-minimal-api-newtonsoft-settings`](nswag-minimal-api-newtonsoft-settings) | RicoSuter/NSwag (to be filed) | Yes | Not run |
-| [`njsonschema-csharp-date-enum-duplicate-converter`](njsonschema-csharp-date-enum-duplicate-converter) | RicoSuter/NJsonSchema (to be filed) | Yes | Not run |
-| [`njsonschema-validator-integer-beyond-int64`](njsonschema-validator-integer-beyond-int64) | RicoSuter/NJsonSchema (to be filed) | Yes | Not run |
+| [`extensions-genlogging-type-classification`](extensions-genlogging-type-classification) | [dotnet/extensions#7855](https://github.com/dotnet/extensions/issues/7855) | Yes | Not run |
+| [`extensions-genlogging-logproperties-expansion`](extensions-genlogging-logproperties-expansion) | [dotnet/extensions#7856](https://github.com/dotnet/extensions/issues/7856) | Yes | Not run |
+| [`extensions-genlogging-classification-attribute-arguments`](extensions-genlogging-classification-attribute-arguments) | [dotnet/extensions#7857](https://github.com/dotnet/extensions/issues/7857) | Yes | Not run |
+| [`extensions-genlogging-transitive-stack-overflow`](extensions-genlogging-transitive-stack-overflow) | [dotnet/extensions#7858](https://github.com/dotnet/extensions/issues/7858) | Yes | Not run |
+| [`aspnetcore-blazor-nullable-parsable`](aspnetcore-blazor-nullable-parsable) | [dotnet/aspnetcore#69901](https://github.com/dotnet/aspnetcore/issues/69901) | Yes | Yes (`Code?`; `Guid?` is fixed) |
+| [`aspnetcore-jsonpatch-newtonsoft`](aspnetcore-jsonpatch-newtonsoft) | [dotnet/aspnetcore#69902](https://github.com/dotnet/aspnetcore/issues/69902), [dotnet/aspnetcore#69903](https://github.com/dotnet/aspnetcore/issues/69903), [dotnet/aspnetcore#69904](https://github.com/dotnet/aspnetcore/issues/69904), [dotnet/aspnetcore#68942](https://github.com/dotnet/aspnetcore/issues/68942#issuecomment-6225098788) (comment), [dotnet/aspnetcore#25942](https://github.com/dotnet/aspnetcore/issues/25942#issuecomment-6225099217) (comment) | Yes | Yes |
+| [`aspnetcore-rdg-asparameters-nullable-constructor`](aspnetcore-rdg-asparameters-nullable-constructor) | [dotnet/aspnetcore#58953](https://github.com/dotnet/aspnetcore/issues/58953#issuecomment-6225098398) (comment) | Yes | Yes |
+| [`runtime-regex-generator-culturename`](runtime-regex-generator-culturename) | [dotnet/runtime#135977](https://github.com/dotnet/runtime/issues/135977) | Yes | Yes |
+| [`runtime-options-validator-display-name`](runtime-options-validator-display-name) | [dotnet/runtime#135978](https://github.com/dotnet/runtime/issues/135978) | Yes | Yes |
+| [`runtime-stj-schema-converter-value-object`](runtime-stj-schema-converter-value-object) | [dotnet/runtime#105769](https://github.com/dotnet/runtime/issues/105769#issuecomment-6225163542) (comment) | Yes | Yes |
+| [`efcore-compiled-nullable-comparer`](efcore-compiled-nullable-comparer) | [dotnet/efcore#39291](https://github.com/dotnet/efcore/issues/39291) | Yes | Yes |
+| [`efcore-cosmos-contains-converted`](efcore-cosmos-contains-converted) | [dotnet/efcore#35092](https://github.com/dotnet/efcore/issues/35092#issuecomment-6225163999) (comment) | Yes | Yes |
+| [`efcore-interceptor-reader-error`](efcore-interceptor-reader-error) | [dotnet/efcore#35229](https://github.com/dotnet/efcore/issues/35229#issuecomment-6225164337) (comment) | Yes | Yes |
+| [`functions-worker-aspnetcore-analyzer-ad0001`](functions-worker-aspnetcore-analyzer-ad0001) | [Azure/azure-functions-dotnet-worker#3520](https://github.com/Azure/azure-functions-dotnet-worker/issues/3520) | Yes | Not run |
+| [`hotchocolate-data-named-filter-convention-field-order`](hotchocolate-data-named-filter-convention-field-order) | [ChilliCream/graphql-platform#10565](https://github.com/ChilliCream/graphql-platform/issues/10565) | Yes | Not run |
+| [`hotchocolate-native-aot-startup`](hotchocolate-native-aot-startup) | [ChilliCream/graphql-platform#10566](https://github.com/ChilliCream/graphql-platform/issues/10566) | Yes | Not run |
+| [`hotchocolate-data-hasvalue-istrue-efcore`](hotchocolate-data-hasvalue-istrue-efcore) | [ChilliCream/graphql-platform#10567](https://github.com/ChilliCream/graphql-platform/issues/10567) | Yes | Not run |
+| [`hotchocolate-data-custom-filter-operation-cost`](hotchocolate-data-custom-filter-operation-cost) | [ChilliCream/graphql-platform#10568](https://github.com/ChilliCream/graphql-platform/issues/10568) | Yes | Not run |
+| [`swashbuckle-schemafilter-constructor-deadlock`](swashbuckle-schemafilter-constructor-deadlock) | [domaindrivendev/Swashbuckle.AspNetCore#4207](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/4207) | Yes | Not run |
+| [`swashbuckle-fromquery-hidden-property-ambiguous`](swashbuckle-fromquery-hidden-property-ambiguous) | [domaindrivendev/Swashbuckle.AspNetCore#4208](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/4208) | Yes | Not run |
+| [`protobuf-net-protomodel-scalar-serializer-nullable-map`](protobuf-net-protomodel-scalar-serializer-nullable-map) | [protobuf-net/protobuf-net#1371](https://github.com/protobuf-net/protobuf-net/issues/1371) | Yes | Not run |
+| [`protobuf-net-protomodel-trim-warnings`](protobuf-net-protomodel-trim-warnings) | [protobuf-net/protobuf-net#1372](https://github.com/protobuf-net/protobuf-net/issues/1372) | Yes | Not run |
+| [`protobuf-net-scalar-serializer-packed-dataformat`](protobuf-net-scalar-serializer-packed-dataformat) | [protobuf-net/protobuf-net#1373](https://github.com/protobuf-net/protobuf-net/issues/1373) | Yes | Not run |
+| [`protobuf-net-getschema-surrogate-package-root-level`](protobuf-net-getschema-surrogate-package-root-level) | [protobuf-net/protobuf-net#1374](https://github.com/protobuf-net/protobuf-net/issues/1374) | Yes | Not run |
+| [`protobuf-net-map-key-scalar-serializer`](protobuf-net-map-key-scalar-serializer) | [protobuf-net/protobuf-net#1352](https://github.com/protobuf-net/protobuf-net/issues/1352#issuecomment-6225269019) (comment) | Yes | Not run |
+| [`akka-serializer-v2-generic-formatter`](akka-serializer-v2-generic-formatter) | [akkadotnet/akka.net#8821](https://github.com/akkadotnet/akka.net/issues/8821) | Yes (1.6.0-beta1 to beta3) | Not run |
+| [`nswag-query-model-hidden-property`](nswag-query-model-hidden-property) | [RicoSuter/NSwag#5412](https://github.com/RicoSuter/NSwag/issues/5412) | Yes | Not run |
+| [`nswag-minimal-api-newtonsoft-settings`](nswag-minimal-api-newtonsoft-settings) | [RicoSuter/NSwag#5413](https://github.com/RicoSuter/NSwag/issues/5413) | Yes | Not run |
+| [`njsonschema-csharp-date-enum-duplicate-converter`](njsonschema-csharp-date-enum-duplicate-converter) | [RicoSuter/NJsonSchema#1945](https://github.com/RicoSuter/NJsonSchema/issues/1945) | Yes | Not run |
+| [`njsonschema-validator-integer-beyond-int64`](njsonschema-validator-integer-beyond-int64) | [RicoSuter/NJsonSchema#568](https://github.com/RicoSuter/NJsonSchema/issues/568#issuecomment-6225273089) (comment) | Yes | Not run |
 
 Running a repro needs bash (Git Bash works on Windows) and the .NET SDK of the target framework:
 
